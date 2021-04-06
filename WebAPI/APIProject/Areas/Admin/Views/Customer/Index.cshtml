@@ -1,0 +1,57 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using Data.DB
+@using Data.Utils
+
+<div id="view-customer">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="text-dark">
+                        <h4>Khách hàng</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-6 offset-md-0 col-sm-6 mt-1">
+                    <input autocomplete="off" type="text" class="form-control" id="txtPhoneCus" placeholder="Nhập số điện thoại hoặc tên người dùng" />
+                </div>
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input type="text" class="form-control relative-icon-calendar date" id="dtFromdateCus" placeholder="Từ ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input type="text" class="form-control relative-icon-calendar date" id="dtTodateCus" placeholder="Đến ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 text-md-right">
+                    <button class="btn btn-primary" id="btnSearch" onclick="searchCustomer()"><i class="fa fa-search"></i> Tìm kiếm</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12" id="listCustomer">
+                    @{
+                        Html.RenderAction("Search", "Customer", new { Page = 1, Phone = "" });
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#txtPhoneCus, #dtFromdateCus, #dtTodateCus").keypress(function (e) {
+            if (e.keyCode == 13) {
+                searchCustomer();
+            }
+        });
+    });
+</script>
+

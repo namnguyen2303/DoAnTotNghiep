@@ -1,0 +1,83 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row pb-3">
+            <div class="text-dark">
+                <h4><i class="fa fa-fw fa-tachometer"></i> Tổng quan</h4>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row rowCount" id="countDashboard">
+    <div class="col-xs-12 col-md-4 col-lg-4 col-xl-4 mb-3">
+        <a href="/Admin/News/Index">
+            <div class="card-box padding-card-home bg-home-customer">
+                <i class="fa fa-book float-right text-white size-icon-cardbox-home"></i>
+                <h5 class="text-white text-uppercase">Bài viết</h5>
+                <h1 class="text-white countCustomer pb-4">@(ViewBag.Post != 0 ? @ViewBag.Post : "0")</h1>
+            </div>
+        </a>
+    </div>
+    <div class="col-xs-12 col-md-4 col-lg-4 col-xl-4 mb-3">
+        <a href="/Admin/Product/Index">
+            <div class="card-box padding-card-home bg-home-item" id="">
+                <i class="fa fa-product-hunt float-right text-white size-icon-cardbox-home"></i>
+                <h5 class="text-white text-uppercase">Sản Phẩm</h5>
+                <h1 class="text-white countItem pb-4">@(ViewBag.Product != 0 ? @ViewBag.Product : "0")</h1>
+            </div>
+        </a>
+    </div>
+    <div class="col-xs-12 col-md-4 col-lg-4 col-xl-4 mb-3" id="card-i">
+        <a href="/Admin/Order/Index">
+            <div class="card-box padding-card-home bg-home-order" id="bg-home-card">
+                <i class="fa fa-shopping-basket float-right text-white size-icon-cardbox-home"></i>
+                <h5 class="text-white text-uppercase">Đơn hàng</h5>
+                <h1 class="text-white countCard pb-4">@(ViewBag.Order != 0 ? @ViewBag.Order : "0")</h1>
+            </div>
+        </a>
+    </div>
+</div>
+<div id="chartContainer"></div>
+@*<script type="text/javascript">
+    window.onload = function () {
+        var chart = new CanvasJS.Chart("chartContainer", {
+            theme: "light2",
+            animationEnabled: true,
+            title: {
+                text: "Biểu đố thống kê doanh số",
+                fontSize: 25
+            },
+            axisX: {
+                valueFormatString: "MMM",
+                interval: 1,
+                intervalType: "month"
+            },
+            axisY: {
+                title: ""
+            },
+            data: [
+                {
+                    type: "area",
+                    dataPoints: [
+                        { x: new Date(2012, 00, 1), y: 2600 },
+                        { x: new Date(2012, 01, 1), y: 3800 },
+                        { x: new Date(2012, 02, 1), y: 4300 },
+                        { x: new Date(2012, 03, 1), y: 2900 },
+                        { x: new Date(2012, 04, 1), y: 4100 },
+                        { x: new Date(2012, 05, 1), y: 4500 },
+                        { x: new Date(2012, 06, 1), y: 8600 },
+                        { x: new Date(2012, 07, 1), y: 6400 },
+                        { x: new Date(2012, 08, 1), y: 5300 },
+                        { x: new Date(2012, 09, 1), y: 6000 }
+                    ]
+                }
+            ]
+        });
+        chart.render();
+    };
+</script>*@

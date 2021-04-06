@@ -1,0 +1,42 @@
+﻿@using Data.Utils
+@using Data.Model
+@model ListCategoryOutputModel
+
+@* Sửa danh mục sản phẩm *@
+<div class="modal fade" id="modal_edit_category_product" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-fw fa-shopping-cart"></i>Sửa danh mục sản phẩm</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                <form id="form_update_category" name="form_update_category">
+                    <input id="id_product" name="id_product" value="@Model.ID" type="hidden" class="form-control" />
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Tên Danh Mục</label> *</p>
+                            <input type="text" class="form-control" id="name_edit_product" name="name_edit_product" placeholder="Nhập tên danh mục..." value="@Model.Name" />
+                        </div>
+                    </div>
+                    <div class="row pb-3">
+                        <div class="col-md-12 col-sm-12 col-12">
+                            <p class="mb-0 color-require"><label class="text-dark">Trạng thái hoạt động</label> *</p>
+                            <select class="form-control" id="status_edit_product" value="@Model.Status" name="status_edit_product">
+                                <option value="1">Hoạt động</option>
+                                <option value="0">Ngừng hoạt động</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="saveEditCategoryProduct();">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>

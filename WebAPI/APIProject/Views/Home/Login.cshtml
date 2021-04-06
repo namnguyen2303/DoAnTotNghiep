@@ -1,0 +1,51 @@
+﻿@{
+    Layout = null;
+}
+@*@using APIProject.Resource*@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>CARRECT</title>
+    <link rel="icon" href="~/Content/images/logo_carrect.png" />
+    @Styles.Render("~/dekko/css")
+    @Scripts.Render("~/layout/js")
+    @Scripts.Render("~/dekko/js")
+    @Scripts.Render("~/bundle/js")
+</head>
+<body id="body_login">
+    <div class="bg-image"></div>
+    <div class="bg-text">
+        <div class="col-md-12 px-0">
+            <img src="~/Content/images/logo_carrect.png" style="margin-bottom: -49px;" width="289" height="214" />
+        </div>
+        <div class="txtLogin row mt-5" id="txtLogin">
+            <input type="text" class="form-control col-md-10 inputLogin" placeholder="Phone" @*placeholder="@Resources.Account*@" id="txtUsernameLogin" name="">
+            <i class="iconUsernameLogin fa fa-user"></i>
+        </div>
+        <div class="txtLogin row mt-1" id="txtLogin">
+            <input type="password" class="form-control col-md-10 inputLogin" placeholder="@*@Resources.Password*@" id="txtPasswordLogin" name="">
+            <i class="iconPasswordLogin fa fa-lock"></i>
+        </div>
+        <button class="col-md-4 btn btn-default mt-3 btnLogin" id="btnLogin" onclick="Login()">@*@Resources.LOGIN*@</button>
+        @*<i class="iconBtnLogin fa fa-mail-forward"></i>*@
+    </div>
+</body>
+</html>
+
+<script>
+
+    $(document).ready(function () {
+
+        $("#txtUsernameLogin").focus();
+        $('.inputLogin').keypress(function (e) {
+            var key = e.which;
+            if (key == 13) {
+                $("#btnLogin").click();
+            }
+        });
+
+    });
+
+</script>

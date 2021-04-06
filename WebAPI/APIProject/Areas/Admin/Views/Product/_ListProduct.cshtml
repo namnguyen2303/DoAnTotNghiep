@@ -1,0 +1,71 @@
+﻿@using Data.DB;
+@using Data.Model
+@using Data.Utils
+@using PagedList.Mvc
+@model PagedList.IPagedList<ListProductOutputModel>
+
+<table class="table table-striped table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-dark bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Mã SP</th>
+            <th>Ảnh</th>
+            <th>Tên sản phẩm</th>
+            <th>Danh mục</th>
+            <th>Giá</th>
+            <th>Ngày tạo</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="10">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var data in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@data.ID</td>
+                        <td>
+                            <img alt="Ảnh sản phẩm" src="@data.ImageStr" width="150px">
+                        </td>
+                        <td>@data.Name</td>
+                        <td>@data.Category_Name</td>
+                        <td>@data.Price</td>
+                        <td>@data.CreateDateStr</td>
+                        <td style="width: 72px">
+                            <a title="Chi tiết" class="cursor-pointer" id="btnEditProduct" onclick="editProduct(@data.ID)">
+                                <i class="btnEdit fa fa-fw fa-edit text-success"></i>
+                            </a>
+                            <a title="Xóa sản phẩm" onclick="deleteProduct(@data.ID)" class="cursor-pointer">
+                                <i class="btnDelete fa fa-fw fa-trash-o text-danger"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @Html.PagedListPager(Model, Page => Url.Action("Search", new { Page = Page, FromDate = ViewBag.FromDate, ToDate = ViewBag.ToDate, Name = ViewBag.Name, Category_id = ViewBag.Category }),
+     PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions()
+     {
+         HttpMethod = "GET",
+         UpdateTargetId = "tableProduct"
+     })
+     )
+    </div>
+</div>

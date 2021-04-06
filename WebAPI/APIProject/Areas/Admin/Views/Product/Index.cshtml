@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div id="view-product">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="text-dark">
+                        <h4>Sản phẩm</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input autocomplete="off" type="text" class="form-control" id="txtNameProduct" placeholder="Nhập tên sản phẩm" />
+                </div>
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <select id="txtCategoryProduct" name="txtCategoryProduct" onchange="searchProductItem()" class="form-control">
+                        @{
+                            <option value="0">Tất cả danh mục</option>
+                            foreach (var p in ViewBag.Category)
+                            {
+                                <option value="@p.CategoryID">@p.Name</option>
+                            }
+                        }
+                    </select>
+                </div>
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input type="text" class="form-control relative-icon-calendar date" id="dtFromdateProduct" placeholder="Từ ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input type="text" class="form-control relative-icon-calendar date" id="dtTodateProduct" placeholder="Đến ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 text-md-right">
+                    <button class="btn btn-primary" id="btnSearch" onclick="searchProductItem()"><i class="fa fa-search"></i> Tìm kiếm</button>
+                    <button class="btn btn-success" onclick="addProduct()" id="btnAddProduct"><i class="fa fa-plus"></i> Thêm mới</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12" id="tableProduct">
+                    @{
+                        Html.RenderAction("Search", "Product", new { Page = 1, Name = "", Category_id = 0});
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtNameProduct, #dtFromdateProduct, #dtTodateProduct").keypress(function (e) {
+            if (e.keyCode == 13) {
+                searchProductItem();
+            }
+        });
+    });
+</script>
+

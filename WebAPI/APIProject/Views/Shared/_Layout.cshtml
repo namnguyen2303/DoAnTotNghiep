@@ -1,0 +1,254 @@
+﻿<!DOCTYPE html>
+<html>
+@using Data.Model;
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Raleway' rel='stylesheet' type='text/css'>
+</head>
+<body>
+    <!-- wpf loader Two -->
+    <div id="wpf-loader-two">
+        <div class="wpf-loader-two-inner">
+            <span>Loading</span>
+        </div>
+    </div>
+    <!-- / wpf loader Two -->
+    <!-- SCROLL TOP BUTTON -->
+    <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
+    <!-- END SCROLL TOP BUTTON -->
+    <header id="aa-header">
+        <!-- start header top  -->
+        <div class="aa-header-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-header-top-area">
+                            <!-- start header top left -->
+                            <div class="aa-header-top-left">
+                                <!-- start language -->
+                                <div class="aa-language">
+                                    <div class="dropdown">
+                                        <a class="btn dropdown-toggle" href="#" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            <img src="~/Content/img/flag/vietnam.png" alt="english flag">Việt Nam
+                                        </a>
+                                    </div>
+                                </div>
+                                <!-- / language -->
+                                <!-- start cellphone -->
+                                <div class="cellphone hidden-xs">
+                                    <p><span class="fa fa-phone"></span>096-444-33-70</p>
+                                </div>
+                                <!-- / cellphone -->
+                            </div>
+                            <!-- / header top left -->
+                            <div class="aa-header-top-right">
+                                <ul class="aa-head-top-nav-right">
+                                    <li><a href="/Account/Index">Tài khoản</a></li>
+                                    <li class="hidden-xs"><a href="/Wishlist/Index">Yêu thích</a></li>
+                                    <li class="hidden-xs"><a href="/Cart/Index">Giỏ hàng của tôi</a></li>
+                                    @*<li class="hidden-xs"><a href="checkout.html">Checkout</a></li>*@
+                                    <li><a href="" data-toggle="modal" data-target="#login-modal">Đăng nhập</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / header top  -->
+        <!-- start header bottom  -->
+        <div class="aa-header-bottom">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-header-bottom-area">
+                            <!-- logo  -->
+                            <div class="aa-logo">
+                                <!-- Text based logo -->
+                                <a href="/Home/Index">
+                                    <span class="fa fa-shopping-cart"></span>
+                                    <p>TranDung<strong>Shop</strong> <span>Thời trang của mọi người</span></p>
+                                </a>
+                                <!-- img based logo -->
+                                <!-- <a href="index.html"><img src="~/Content/img/logo.jpg" alt="logo img"></a> -->
+                            </div>
+                            <!-- / logo  -->
+                            <!-- cart box -->
+                            <div class="aa-cartbox">
+                                <a class="aa-cart-link" href="#">
+                                    <span class="fa fa-shopping-basket"></span>
+                                    <span class="aa-cart-title">Giỏ hàng</span>
+                                    <span class="aa-cart-notify">2</span>
+                                </a>
+                                <div class="aa-cartbox-summary">
+                                    <ul>
+                                        <li>
+                                            <a class="aa-cartbox-img" href="#"><img src="~/Content/img/woman-small-2.jpg" alt="img"></a>
+                                            <div class="aa-cartbox-info">
+                                                <h4><a href="#">Product Name</a></h4>
+                                                <p>1 x $250</p>
+                                            </div>
+                                            <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                        </li>
+                                    </ul>
+                                    <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                                </div>
+                            </div>
+                            <!-- / cart box -->
+                            <!-- search box -->
+                            <div class="aa-search-box">
+                                <form action="">
+                                    <input type="text" name="" id="" placeholder="Tìm kiếm sản phẩm...">
+                                    <button type="submit"><span class="fa fa-search"></span></button>
+                                </form>
+                            </div>
+                            <!-- / search box -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- / header bottom  -->
+    </header>
+    <!-- / header section -->
+    <!-- menu -->
+    <section id="menu">
+        <div class="container">
+            <div class="menu-area">
+                <!-- Navbar -->
+                <div class="navbar navbar-default" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="navbar-collapse collapse">
+                        <!-- Left nav -->
+                        <ul class="nav navbar-nav">
+                            <li><a href="/Home/Index">Trang chủ</a></li>
+                            <li>
+                                <a href="">Nam<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    @foreach (var item in ViewBag.Categories1)
+                                    {
+                                        <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Nữ<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    @foreach (var item in (IEnumerable<ListCategoryOutputModel>)ViewData["Categories0"])
+                                    {
+                                        <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                    }
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="">Trẻ con <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    @foreach (var item in ViewBag.Categories2)
+                                    {
+                                        <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                    }
+                                </ul>
+                            </li>
+
+                            <li>
+                                <a href="blog-archive.html">Blog</a>
+                            </li>
+                            <li><a href="/Contact/Index">Liên hệ</a></li>
+                        </ul>
+                    </div><!--/.nav-collapse -->
+                </div>
+            </div>
+        </div>
+    </section>
+    @*<div class="container body-content">*@
+    @RenderBody()
+    <hr />
+    <footer id="aa-footer">
+        <!-- footer bottom -->
+        <div class="aa-footer-top">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="aa-footer-top-area">
+                            <div class="row">
+
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="aa-footer-widget">
+                                        <h3>Menu</h3>
+                                        <ul class="aa-footer-nav">
+                                            <li><a href="/Home/Index">Trang chủ</a></li>
+                                            <li><a href="#">Dịch vụ</a></li>
+                                            <li><a href="#">Sản phẩm</a></li>
+                                            <li><a href="#">Về chúng tôi</a></li>
+                                            <li><a href="#">Liên hệ chúng tôi</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-md-3 col-sm-6">
+                                    <div class="aa-footer-widget">
+                                        <div class="aa-footer-widget">
+                                            <h3>Liên hệ</h3>
+                                            <address>
+                                                <p>KĐT Kiến Hưng, Quận Hà Đông, TP.Hà Nội</p>
+                                                <p><span class="fa fa-phone"></span>096 444 3270</p>
+                                                <p><span class="fa fa-envelope"></span>trandungshop@gmail.com</p>
+                                            </address>
+                                            <div class="aa-footer-social">
+                                                <a href="#"><span class="fa fa-facebook"></span></a>
+                                                <a href="#"><span class="fa fa-twitter"></span></a>
+                                                <a href="#"><span class="fa fa-google-plus"></span></a>
+                                                <a href="#"><span class="fa fa-youtube"></span></a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-5 col-md-offset-1 col-sm-6">
+                                    <div class="aa-contact-map">
+                                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d10539.128422821088!2d105.78632841659021!3d20.946707926655307!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3135ad36e25b388f%3A0xade9ab27f148cf48!2zS2h1IMSRw7QgdGjhu4sgTeG6rXUgTMawxqFuZywgS2nhur9uIEjGsG5nLCBIw6AgxJDDtG5nLCBIw6AgTuG7mWksIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1616409177127!5m2!1svi!2s" width="90%" height="300" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- footer-bottom -->
+        @*<div class="aa-footer-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="aa-footer-bottom-area">
+                                <p> <a href="http://www.markups.io/"></a></p>
+                                <div class="aa-footer-payment">
+                                    <span class="fa fa-cc-mastercard"></span>
+                                    <span class="fa fa-cc-visa"></span>
+                                    <span class="fa fa-paypal"></span>
+                                    <span class="fa fa-cc-discover"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </footer>
+    @* </div>*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

@@ -1,0 +1,70 @@
+﻿@using Data.DB
+@using Data.Model
+@using PagedList.Mvc
+@using PagedList
+@model IPagedList<ListCustomerOutputModel>
+@using Data.Utils
+
+<table class="table table-striped table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-dark bg-thead">
+        <tr>
+            <th>STT</th>
+            <th>Họ tên</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Ngày tạo</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="15">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var cus in Model)
+                {
+                    <tr>
+                        <td>@stt</td>
+                        <td>@(String.IsNullOrEmpty(cus.Name) ? "Chưa cập nhật" : cus.Name)</td>
+                        <td>@(String.IsNullOrEmpty(cus.PhoneNumber) ? "Chưa cập nhật" : cus.PhoneNumber)</td>
+                        <td>@(String.IsNullOrEmpty(cus.Email) ? "Chưa cập nhật" : cus.Email)</td>
+                        <td>@(String.IsNullOrEmpty(cus.Address) ? "Chưa cập nhật" : cus.Address)</td>
+                        <td>@(String.IsNullOrEmpty(cus.CreateDateStr) ? "Chưa cập nhật" : cus.CreateDateStr)</td>
+                        <td>
+                            @*<a data-toggle="tooltip" data-placement="top" title="Reset mật khẩu" class="cursor-pointer mr-2" onclick="refreshCus(@cus.ID)">
+                                <i class="btnRefresh fa fa-fw fa-refresh"></i>
+                            </a>*@
+                            <a title="Xóa tài khoản" class="cursor-pointer" onclick="deleteCus(@cus.ID)">
+                                <i class="btnDelete text-danger fa fa-fw fa-trash-o"></i>
+                            </a>
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+
+<div class="col-md-12">
+    <div class="row float-right">
+        @Html.PagedListPager(
+        Model,
+        page => Url.Action("Search", "Customer", new { Page = page, FromDate = ViewBag.FromDateCus, ToDate = ViewBag.ToDateCus, Phone = ViewBag.PhoneSearch }),
+        PagedListRenderOptions.EnableUnobtrusiveAjaxReplacing(new AjaxOptions() { HttpMethod = "GET", UpdateTargetId = "listCustomer" })
+        )
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+    });
+</script>

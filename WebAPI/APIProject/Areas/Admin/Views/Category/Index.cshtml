@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div id="view-category">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="text-dark">
+                        <h4>Danh mục</h4>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="col-md-12" id="tableCategory">
+                    <div>
+                        <ul class="nav nav-tabs mt-4" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#category-product">Danh mục sản phẩm</a>
+                            </li>
+                            @*<li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#category-post">Danh mục bài viết</a>
+                            </li>*@
+                        </ul>
+                        <!-- Tab panes -->
+                        <div class="tab-content">
+                            <div id="category-product" class="tab-pane show active">
+                                <div class="row">
+                                    <div class="col-md-6 float-left">
+                                        <input class="form-control" type="text" placeholder="Tên danh mục" id="name_product" />
+                                    </div>
+                                    <div class="col-md-3 float-left">
+                                        <input type="text" class="form-control relative-icon-calendar date" autocomplete="off" id="txtFromDateCategoryProduct" placeholder="Từ ngày" />
+                                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                                    </div>
+                                    <div class="col-md-3 float-left">
+                                        <input type="text" class="form-control relative-icon-calendar date" autocomplete="off" id="txtToDateCategoryProduct" placeholder="Đến ngày" />
+                                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12 text-md-right">
+                                        <button class="btn btn-primary" id="btnSearch" onclick="searchProduct()"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#modal_add_category_product"><i class="fa fa-plus"></i> Thêm mới</button>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12" id="listProductCategory">
+                                        @{Html.RenderAction("SearchProduct", "Category", new { Page = 1, Name = "" }); }
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="category-post" class="tab-pane">
+                                <div class="row">
+                                    <div class="col-md-6 float-left">
+                                        <input class="form-control" type="text" placeholder="Tên danh mục" id="name_post" />
+                                    </div>
+                                    <div class="col-md-3 float-left">
+                                        <input type="text" class="form-control relative-icon-calendar date" autocomplete="off" id="txtFromDateCategoryPost" placeholder="Từ ngày" />
+                                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                                    </div>
+                                    <div class="col-md-3 float-left">
+                                        <input type="text" class="form-control relative-icon-calendar date" autocomplete="off" id="txtToDateCategoryPost" placeholder="Đến ngày" />
+                                        <i class="fa fa-calendar absolute-icon-calendar"></i>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12 text-md-right">
+                                        <button class="btn btn-primary" id="btnSearch" onclick="searchPost()"><i class="fa fa-search"></i> Tìm kiếm</button>
+                                        <button class="btn btn-success" data-toggle="modal" data-target="#modal_add_category_post"><i class="fa fa-plus"></i> Thêm mới</button>
+                                    </div>
+                                </div>
+                                <div class="row mt-2">
+                                    <div class="col-md-12" id="listPostCategory">
+                                       @* @{Html.RenderAction("SearchPost", "Category", new { Page = 1, Name = "" }); }*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="UpdateCategory">
+
+</div>
+
+@* Thêm danh mục sản phẩm *@
+<div class="modal fade" id="modal_add_category_product">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm danh mục sản phẩm</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="createCategory">
+                <form id="form_create_categories_product" name="form_create_categories_product">
+                    <div class="row m-3">
+                        <p class="mb-0 color-require"><label class="text-dark">Tên danh mục</label> *</p>
+                        <input placeholder="Nhập vào tên danh mục" id="name_category_product" name="name_category_product" class="form-control" type="text" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fa fa-times pr-1"></i>Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="createCategoryProduct();"><i class="fa fa-check pr-1"></i>Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@* Thêm danh mục bài viết *@
+<div class="modal fade" id="modal_add_category_post">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm danh mục bài viết</h4>
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <div class="modal-body" id="createCategory">
+                <form id="form_create_categories_post" name="form_create_categories_post">
+                    <div class="row m-3">
+                        <p class="mb-0 color-require"><label class="text-dark">Tên danh mục</label> *</p>
+                        <input placeholder="Nhập vào tên danh mục" id="name_category_post" name="name_category_post" class="form-control" type="text" />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><i class="fa fa-times pr-1"></i>Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="createCategoryPost();"><i class="fa fa-check pr-1"></i>Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#name_product, #txtFromDateCategoryProduct, #txtToDateCategoryProduct").keypress(function (e) {
+            if (e.keyCode == 13) {
+                searchProduct();
+            }
+        });
+
+        $("#name_post, #txtFromDateCategoryPost, #txtToDateCategoryPost").keypress(function (e) {
+            if (e.keyCode == 13) {
+                searchPost();
+            }
+        });
+    });
+</script>

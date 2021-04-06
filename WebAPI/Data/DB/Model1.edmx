@@ -1,0 +1,778 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="TranDungShopModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" />
+          <Property Name="total_price" Type="float" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="date_buy" Type="datetime" />
+          <Property Name="note" Type="nvarchar" MaxLength="255" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="cart_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="date_buy" Type="datetime" />
+          <Property Name="sum_price" Type="float" />
+          <Property Name="quanity" Type="int" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name_category" Type="nvarchar" MaxLength="255" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="colors">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="image_url" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="code" Type="int" />
+          <Property Name="color_name" Type="nvarchar" MaxLength="100" />
+          <Property Name="image_url" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name_customer" Type="nvarchar" MaxLength="50" />
+          <Property Name="phone" Type="varchar" MaxLength="15" />
+          <Property Name="pass" Type="varchar" MaxLength="50" />
+          <Property Name="address_customer" Type="nvarchar" MaxLength="255" />
+          <Property Name="gender" Type="int" />
+          <Property Name="DOB" Type="datetime" />
+          <Property Name="email" Type="varchar" MaxLength="100" />
+          <Property Name="avatar_url" Type="varchar" MaxLength="255" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="summary" Type="nvarchar" MaxLength="255" />
+          <Property Name="detail" Type="text" />
+          <Property Name="imageUrl" Type="varchar" MaxLength="255" />
+          <Property Name="type_new" Type="int" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="order_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="product_id" Type="int" Nullable="false" />
+          <Property Name="date_buy" Type="datetime" />
+          <Property Name="sum_price" Type="float" />
+          <Property Name="quanity" Type="int" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="status" Type="int" />
+          <Property Name="total_price" Type="float" />
+          <Property Name="customer_id" Type="int" Nullable="false" />
+          <Property Name="date_buy" Type="datetime" />
+          <Property Name="note" Type="nvarchar" MaxLength="255" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="product_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="name_product_category" Type="nvarchar" MaxLength="255" />
+          <Property Name="category_id" Type="int" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="product_name" Type="nvarchar" MaxLength="255" />
+          <Property Name="price_start" Type="float" />
+          <Property Name="price_sale" Type="float" />
+          <Property Name="summary" Type="nvarchar" MaxLength="255" />
+          <Property Name="description" Type="nvarchar" MaxLength="255" />
+          <Property Name="detail" Type="text" />
+          <Property Name="slug" Type="varchar" MaxLength="255" />
+          <Property Name="size" Type="char" MaxLength="5" />
+          <Property Name="active" Type="int" />
+          <Property Name="image_url" Type="varchar" MaxLength="255" />
+          <Property Name="product_category_id" Type="int" Nullable="false" />
+          <Property Name="is_hot" Type="int" />
+          <Property Name="is_new" Type="int" />
+          <Property Name="is_sale" Type="int" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="slides">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="summary" Type="nvarchar" MaxLength="255" />
+          <Property Name="image_url" Type="varchar" MaxLength="255" />
+          <Property Name="slug" Type="varchar" MaxLength="255" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="int" Nullable="false" />
+          <Property Name="role" Type="int" />
+          <Property Name="username" Type="varchar" MaxLength="100" />
+          <Property Name="pass" Type="varchar(max)" />
+          <Property Name="phone" Type="varchar" MaxLength="15" />
+          <Property Name="is_active" Type="int" Nullable="false" />
+          <Property Name="created_at" Type="datetime" />
+        </EntityType>
+        <Association Name="fk_cate">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="product_categories" Type="Self.product_categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product_categories">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_clor">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="colors" Type="Self.colors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="colors">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cus">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cus_order">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pro">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="order_detail" Type="Self.order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order_detail">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pro_cart">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="cart_detail" Type="Self.cart_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cart_detail">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_proCate">
+          <End Role="product_categories" Type="Self.product_categories" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="product_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TranDungShopModelStoreContainer">
+          <EntitySet Name="cart" EntityType="Self.cart" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="cart_detail" EntityType="Self.cart_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="categories" EntityType="Self.categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="colors" EntityType="Self.colors" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="customers" EntityType="Self.customers" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="news" EntityType="Self.news" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="order_detail" EntityType="Self.order_detail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="orders" EntityType="Self.orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="product_categories" EntityType="Self.product_categories" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="products" EntityType="Self.products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="slides" EntityType="Self.slides" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="users" EntityType="Self.users" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="fk_cate" Association="Self.fk_cate">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="product_categories" EntitySet="product_categories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_clor" Association="Self.fk_clor">
+            <End Role="products" EntitySet="products" />
+            <End Role="colors" EntitySet="colors" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cus" Association="Self.fk_cus">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cus_order" Association="Self.fk_cus_order">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pro" Association="Self.fk_pro">
+            <End Role="products" EntitySet="products" />
+            <End Role="order_detail" EntitySet="order_detail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pro_cart" Association="Self.fk_pro_cart">
+            <End Role="products" EntitySet="products" />
+            <End Role="cart_detail" EntitySet="cart_detail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_proCate" Association="Self.fk_proCate">
+            <End Role="product_categories" EntitySet="product_categories" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="TranDungShopModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cart">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="total_price" Type="Double" />
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <Property Name="date_buy" Type="DateTime" Precision="3" />
+          <Property Name="note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="customers" Relationship="Self.fk_cus" FromRole="cart" ToRole="customers" />
+        </EntityType>
+        <EntityType Name="cart_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="date_buy" Type="DateTime" Precision="3" />
+          <Property Name="sum_price" Type="Double" />
+          <Property Name="quanity" Type="Int32" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="products" Relationship="Self.fk_pro_cart" FromRole="cart_detail" ToRole="products" />
+        </EntityType>
+        <EntityType Name="categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name_category" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="product_categories" Relationship="Self.fk_cate" FromRole="categories" ToRole="product_categories" />
+        </EntityType>
+        <EntityType Name="colors">
+          <Key>
+            <PropertyRef Name="id" />
+            <PropertyRef Name="image_url" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="code" Type="Int32" />
+          <Property Name="color_name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="image_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="products" Relationship="Self.fk_clor" FromRole="colors" ToRole="products" />
+        </EntityType>
+        <EntityType Name="customers">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name_customer" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="address_customer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="gender" Type="Int32" />
+          <Property Name="DOB" Type="DateTime" Precision="3" />
+          <Property Name="email" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="avatar_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="cart" Relationship="Self.fk_cus" FromRole="customers" ToRole="cart" />
+          <NavigationProperty Name="orders" Relationship="Self.fk_cus_order" FromRole="customers" ToRole="orders" />
+        </EntityType>
+        <EntityType Name="news">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="summary" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="imageUrl" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="type_new" Type="Int32" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="order_detail">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="product_id" Type="Int32" Nullable="false" />
+          <Property Name="date_buy" Type="DateTime" Precision="3" />
+          <Property Name="sum_price" Type="Double" />
+          <Property Name="quanity" Type="Int32" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="products" Relationship="Self.fk_pro" FromRole="order_detail" ToRole="products" />
+        </EntityType>
+        <EntityType Name="orders">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="status" Type="Int32" />
+          <Property Name="total_price" Type="Double" />
+          <Property Name="customer_id" Type="Int32" Nullable="false" />
+          <Property Name="date_buy" Type="DateTime" Precision="3" />
+          <Property Name="note" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="customers" Relationship="Self.fk_cus_order" FromRole="orders" ToRole="customers" />
+        </EntityType>
+        <EntityType Name="product_categories">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="name_product_category" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="category_id" Type="Int32" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="categories" Relationship="Self.fk_cate" FromRole="product_categories" ToRole="categories" />
+          <NavigationProperty Name="products" Relationship="Self.fk_proCate" FromRole="product_categories" ToRole="products" />
+        </EntityType>
+        <EntityType Name="products">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="product_name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="price_start" Type="Double" />
+          <Property Name="price_sale" Type="Double" />
+          <Property Name="summary" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="description" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="detail" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="size" Type="String" MaxLength="5" FixedLength="true" Unicode="false" />
+          <Property Name="active" Type="Int32" />
+          <Property Name="image_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="product_category_id" Type="Int32" Nullable="false" />
+          <Property Name="is_hot" Type="Int32" />
+          <Property Name="is_new" Type="Int32" />
+          <Property Name="is_sale" Type="Int32" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="cart_detail" Relationship="Self.fk_pro_cart" FromRole="products" ToRole="cart_detail" />
+          <NavigationProperty Name="colors" Relationship="Self.fk_clor" FromRole="products" ToRole="colors" />
+          <NavigationProperty Name="order_detail" Relationship="Self.fk_pro" FromRole="products" ToRole="order_detail" />
+          <NavigationProperty Name="product_categories" Relationship="Self.fk_proCate" FromRole="products" ToRole="product_categories" />
+        </EntityType>
+        <EntityType Name="slides">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="summary" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="image_url" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="slug" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <EntityType Name="users">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int32" Nullable="false" />
+          <Property Name="role" Type="Int32" />
+          <Property Name="username" Type="String" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="pass" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="phone" Type="String" MaxLength="15" FixedLength="false" Unicode="false" />
+          <Property Name="is_active" Type="Int32" Nullable="false" />
+          <Property Name="created_at" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="fk_cus">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="cart" Type="Self.cart" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cart">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pro_cart">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="cart_detail" Type="Self.cart_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="cart_detail">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cate">
+          <End Role="categories" Type="Self.categories" Multiplicity="0..1" />
+          <End Role="product_categories" Type="Self.product_categories" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="product_categories">
+              <PropertyRef Name="category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_clor">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="colors" Type="Self.colors" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="colors">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_cus_order">
+          <End Role="customers" Type="Self.customers" Multiplicity="1" />
+          <End Role="orders" Type="Self.orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="customers">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="orders">
+              <PropertyRef Name="customer_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_pro">
+          <End Role="products" Type="Self.products" Multiplicity="1" />
+          <End Role="order_detail" Type="Self.order_detail" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="products">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="order_detail">
+              <PropertyRef Name="product_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="fk_proCate">
+          <End Role="product_categories" Type="Self.product_categories" Multiplicity="1" />
+          <End Role="products" Type="Self.products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="product_categories">
+              <PropertyRef Name="id" />
+            </Principal>
+            <Dependent Role="products">
+              <PropertyRef Name="product_category_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="TranDungShopEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cart" EntityType="Self.cart" />
+          <EntitySet Name="cart_detail" EntityType="Self.cart_detail" />
+          <EntitySet Name="categories" EntityType="Self.categories" />
+          <EntitySet Name="colors" EntityType="Self.colors" />
+          <EntitySet Name="customers" EntityType="Self.customers" />
+          <EntitySet Name="news" EntityType="Self.news" />
+          <EntitySet Name="order_detail" EntityType="Self.order_detail" />
+          <EntitySet Name="orders" EntityType="Self.orders" />
+          <EntitySet Name="product_categories" EntityType="Self.product_categories" />
+          <EntitySet Name="products" EntityType="Self.products" />
+          <EntitySet Name="slides" EntityType="Self.slides" />
+          <EntitySet Name="users" EntityType="Self.users" />
+          <AssociationSet Name="fk_cus" Association="Self.fk_cus">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="cart" EntitySet="cart" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pro_cart" Association="Self.fk_pro_cart">
+            <End Role="products" EntitySet="products" />
+            <End Role="cart_detail" EntitySet="cart_detail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cate" Association="Self.fk_cate">
+            <End Role="categories" EntitySet="categories" />
+            <End Role="product_categories" EntitySet="product_categories" />
+          </AssociationSet>
+          <AssociationSet Name="fk_clor" Association="Self.fk_clor">
+            <End Role="products" EntitySet="products" />
+            <End Role="colors" EntitySet="colors" />
+          </AssociationSet>
+          <AssociationSet Name="fk_cus_order" Association="Self.fk_cus_order">
+            <End Role="customers" EntitySet="customers" />
+            <End Role="orders" EntitySet="orders" />
+          </AssociationSet>
+          <AssociationSet Name="fk_pro" Association="Self.fk_pro">
+            <End Role="products" EntitySet="products" />
+            <End Role="order_detail" EntitySet="order_detail" />
+          </AssociationSet>
+          <AssociationSet Name="fk_proCate" Association="Self.fk_proCate">
+            <End Role="product_categories" EntitySet="product_categories" />
+            <End Role="products" EntitySet="products" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="TranDungShopModelStoreContainer" CdmEntityContainer="TranDungShopEntities">
+          <EntitySetMapping Name="cart">
+            <EntityTypeMapping TypeName="TranDungShopModel.cart">
+              <MappingFragment StoreEntitySet="cart">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="total_price" ColumnName="total_price" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="date_buy" ColumnName="date_buy" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="cart_detail">
+            <EntityTypeMapping TypeName="TranDungShopModel.cart_detail">
+              <MappingFragment StoreEntitySet="cart_detail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="date_buy" ColumnName="date_buy" />
+                <ScalarProperty Name="sum_price" ColumnName="sum_price" />
+                <ScalarProperty Name="quanity" ColumnName="quanity" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="categories">
+            <EntityTypeMapping TypeName="TranDungShopModel.categories">
+              <MappingFragment StoreEntitySet="categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name_category" ColumnName="name_category" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="colors">
+            <EntityTypeMapping TypeName="TranDungShopModel.colors">
+              <MappingFragment StoreEntitySet="colors">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="code" ColumnName="code" />
+                <ScalarProperty Name="color_name" ColumnName="color_name" />
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="customers">
+            <EntityTypeMapping TypeName="TranDungShopModel.customers">
+              <MappingFragment StoreEntitySet="customers">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name_customer" ColumnName="name_customer" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="address_customer" ColumnName="address_customer" />
+                <ScalarProperty Name="gender" ColumnName="gender" />
+                <ScalarProperty Name="DOB" ColumnName="DOB" />
+                <ScalarProperty Name="email" ColumnName="email" />
+                <ScalarProperty Name="avatar_url" ColumnName="avatar_url" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="news">
+            <EntityTypeMapping TypeName="TranDungShopModel.news">
+              <MappingFragment StoreEntitySet="news">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="detail" ColumnName="detail" />
+                <ScalarProperty Name="imageUrl" ColumnName="imageUrl" />
+                <ScalarProperty Name="type_new" ColumnName="type_new" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="order_detail">
+            <EntityTypeMapping TypeName="TranDungShopModel.order_detail">
+              <MappingFragment StoreEntitySet="order_detail">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_id" ColumnName="product_id" />
+                <ScalarProperty Name="date_buy" ColumnName="date_buy" />
+                <ScalarProperty Name="sum_price" ColumnName="sum_price" />
+                <ScalarProperty Name="quanity" ColumnName="quanity" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="orders">
+            <EntityTypeMapping TypeName="TranDungShopModel.orders">
+              <MappingFragment StoreEntitySet="orders">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="total_price" ColumnName="total_price" />
+                <ScalarProperty Name="customer_id" ColumnName="customer_id" />
+                <ScalarProperty Name="date_buy" ColumnName="date_buy" />
+                <ScalarProperty Name="note" ColumnName="note" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="product_categories">
+            <EntityTypeMapping TypeName="TranDungShopModel.product_categories">
+              <MappingFragment StoreEntitySet="product_categories">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="name_product_category" ColumnName="name_product_category" />
+                <ScalarProperty Name="category_id" ColumnName="category_id" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="products">
+            <EntityTypeMapping TypeName="TranDungShopModel.products">
+              <MappingFragment StoreEntitySet="products">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="product_name" ColumnName="product_name" />
+                <ScalarProperty Name="price_start" ColumnName="price_start" />
+                <ScalarProperty Name="price_sale" ColumnName="price_sale" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="description" ColumnName="description" />
+                <ScalarProperty Name="detail" ColumnName="detail" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="size" ColumnName="size" />
+                <ScalarProperty Name="active" ColumnName="active" />
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="product_category_id" ColumnName="product_category_id" />
+                <ScalarProperty Name="is_hot" ColumnName="is_hot" />
+                <ScalarProperty Name="is_new" ColumnName="is_new" />
+                <ScalarProperty Name="is_sale" ColumnName="is_sale" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="slides">
+            <EntityTypeMapping TypeName="TranDungShopModel.slides">
+              <MappingFragment StoreEntitySet="slides">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="summary" ColumnName="summary" />
+                <ScalarProperty Name="image_url" ColumnName="image_url" />
+                <ScalarProperty Name="slug" ColumnName="slug" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="users">
+            <EntityTypeMapping TypeName="TranDungShopModel.users">
+              <MappingFragment StoreEntitySet="users">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="role" ColumnName="role" />
+                <ScalarProperty Name="username" ColumnName="username" />
+                <ScalarProperty Name="pass" ColumnName="pass" />
+                <ScalarProperty Name="phone" ColumnName="phone" />
+                <ScalarProperty Name="is_active" ColumnName="is_active" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

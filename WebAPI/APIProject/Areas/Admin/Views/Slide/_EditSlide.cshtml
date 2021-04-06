@@ -1,0 +1,127 @@
+﻿@using Data.Model
+@using Data.Utils
+@model ListSlideOutputModel
+<div id="modalSlide" class="modal fade" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-secret" aria-hidden="false"></i> Sửa slide</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="row col-12 text-center">
+                    <div class="col-md-12 col-sm-12 col-12">
+                        <a href="" class="text-bold mb-3" style="width:100%;height:100%; color: #5A5A5A;" id="_addImg">
+                            <img id="Imgtag" src="https://cdn4.iconfinder.com/data/icons/social-communication/142/add_photo-512.png" class="col-ml-2 col-md-2 px-0" alt="Chọn" />
+                        </a>
+                    </div>
+                    <div class="article row mt-2" id="_divAddImg">
+                        @{
+                            int I = 0;
+                            var lstImgUrl = Model.ImgUrl != null && Model.ImgUrl.Length > 0 && Model.ImgUrl.Contains(',') ? Model.ImgUrl.Split(',').ToList() : new List<string> { Model.ImgUrl };
+                            foreach (var imgUrl in lstImgUrl)
+                            {
+
+                                <div class="Imgs " id="img-@I" style="box-sizing:border-box;display:inline-block;margin-top:10px;"><img class="_lstImage" src="@imgUrl" onclick="ChangeImage($(this));" style="height:auto; width: 100%; margin-right:-15px;" /><i title="Xóa" onclick="DeleteImage(event);" src="@imgUrl" class="fa fa-2x fa-remove icon-remove display-none" data="img-@I" style="position:absolute;color: #ff0000;"></i></div>
+                                I++;
+                            }
+
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary px-3" onclick="saveEditSlide(@Model.ID)">Lưu</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    //edit image
+    var count = 0;
+    $("#_addImg").off('click').on('click', function (e) {
+        e.preventDefault();
+        count++;
+        var fider = new CKFinder();
+        fider.selectActionFunction = function (fileUrl) {
+            $("#_divAddImg").append('<div class="Imgs" id="img' + count + '" style ="box-sizing:border-box;display:inline-block;margin-top:10px;"><img class="_lstImage" src="' + fileUrl + '" onclick="ChangeImage($(this));" style="height:auto; width: 100%; max-height:600px; margin-right:-15px;"/><i  title ="Xóa" onclick="DeleteImage(event);" src="' + fileUrl + '" class="fa fa-2x fa-remove icon-remove display-none " data="img' + count + '" style="position:absolute;color: #ff0000;"></i></div>');
+            var listUrl = $("#_txturlImage").val();
+            if (listUrl == "") {
+                listUrl = fileUrl;
+                $("#_txturlImage").val(listUrl);
+            }
+            else {
+                var url = listUrl + "," + fileUrl;
+                $("#_txturlImage").val(url);
+            }
+            $(".Imgs").mouseover(function () {
+                $(this).find(".icon-remove").removeClass("display-none");
+            });
+            $(".Imgs").mouseout(function () {
+                $(this).find(".icon-remove").addClass("display-none");
+            });
+        }
+        fider.popup();
+    });
+
+    $(document).ready(function () {
+        CKEDITOR.replace('NoteEdit', {
+            height: 300,
+            disableObjectResizing: true
+        });
+
+        CKEDITOR.on('dialogDefinition', function (ev) {
+            var dialogName = ev.data.name;
+            var dialogDefinition = ev.data.definition;
+            //var editorO = ev.data.definition.dialog.getParentEditor();
+
+            if (dialogName == 'image' || dialogName == 'image2') {
+                var infoTab = dialogDefinition.getContents('info');
+
+                if (dialogName == 'image') {
+                    infoTab.remove('txtHeight');
+                    infoTab.remove('txtWidth');
+                    infoTab.remove('ratioLock');
+                }
+                else {
+                    infoTab.remove('height');
+                    infoTab.remove('width');
+                    infoTab.remove('lock');
+                }
+            }
+        });
+
+    });
+
+    $("#add_logo_place").off('click').on('click', function (e) {
+        e.preventDefault();
+        var fider = new CKFinder();
+
+        fider.selectActionFunction = function (fileUrl) {
+            $("#AddImgLogoPlace ").remove();
+            $("#AddLogoPlace").append('<img id="AddImgLogoPlace" src="' + fileUrl + '" class="col-md-12 px-0 border-dekko contentImg" alt="your image" />');
+            var url = window.location.origin + fileUrl;
+            $('#txtAddLogoPlace').val(url);
+        }
+        fider.popup();
+    });
+    function DeleteImage(event) {
+        $(event.target).closest("div").remove();
+    }
+    function ChangeImage($url) {
+        var fider = new CKFinder();
+        fider.selectActionFunction = function (fileUrl) {
+            var url_old = $url.attr('src');
+            $url.attr('src', fileUrl);
+            if (fileUrl != url_old) {
+                var str = $('#txturlImage').val().replace(url_old, fileUrl);
+                $('#txturlImage').val(str);
+            }
+        }
+        fider.popup();
+    }
+</script>

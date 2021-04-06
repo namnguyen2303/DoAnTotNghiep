@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using Data.Model.APIWeb
+@using Data.Utils
+
+<div id="view-new">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row mt-2">
+                <div class="col-md-12">
+                    <div class="text-dark">
+                        <h4>Bài viết</h4>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input autocomplete="off" type="text" class="form-control" id="txtNameNew" placeholder="Tên tiêu đề" />
+                </div>
+                @*<div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <select id="txtCategoryPost" name="txtCategoryPost" onchange="searchPostItem()" class="form-control">
+                        @{
+                            <option value="0">Tất cả danh mục</option>
+                            foreach (var p in ViewBag.Category)
+                            {
+                                <option value="@p.CategoryID">@p.Name</option>
+                            }
+                        }
+                    </select>
+                </div>*@
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input type="text" class="form-control relative-icon-calendar date" id="dtFromdateNew" placeholder="Từ ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+                <div class="col-md-3 offset-md-0 col-sm-6 mt-1">
+                    <input type="text" class="form-control relative-icon-calendar date" id="dtTodateNew" placeholder="Đến ngày" />
+                    <i class="fa fa-calendar absolute-icon-calendar"></i>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12 text-md-right">
+                    <button class="btn btn-primary" id="btnSearch" onclick="searchPostItem()"><i class="fa fa-search"></i> Tìm kiếm</button>
+                    <button class="btn btn-success" onclick="addPost()" id="btnAddPost"><i class="fa fa-plus"></i> Thêm mới</button>
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-md-12" id="tableNew">
+                    @{
+                        Html.RenderAction("Search", "News", new { Page = 1, Name = "", Category_id = 0 });
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $("#txtNameNew, #dtFromdateNew, #dtTodateNew").keypress(function (e) {
+            if (e.keyCode == 13) {
+                searchPostItem();
+            }
+        });
+    });
+</script>
+
