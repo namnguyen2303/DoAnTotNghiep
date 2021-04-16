@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+
 namespace APIProject.Controllers
 {
     public class BaseController : Controller
@@ -21,7 +22,7 @@ namespace APIProject.Controllers
         public SlideBusiness slideBusiness;
 
         //public ListCategoryOutputModel model;
-   
+
         public BaseController() : base()
         {
             loginBusiness = new LoginBusiness(this.GetContext());

@@ -24,7 +24,7 @@ namespace Data.Business
             {
                 List<CategoryModel> listCategory = new List<CategoryModel>();
                 var query = from c in cnn.product_categories
-                            where c.is_active == SystemParam.ACTIVE 
+                            where c.is_active == SystemParam.ACTIVE
                             select new CategoryModel
                             {
                                 CategoryID = c.id,
@@ -88,7 +88,7 @@ namespace Data.Business
                 //    return SystemParam.EXISTING;
                 //}
                 var q = cnn.products.Select(u => u);
-                products item = new products();
+                product item = new product();
                 item.product_category_id = CategoryID;
                 //item.code = Code;
                 item.id = q.Count();
@@ -158,7 +158,7 @@ namespace Data.Business
         {
             try
             {
-                products item = cnn.products.Find(ID);
+                product item = cnn.products.Find(ID);
                 item.product_name = Name;
                 item.product_category_id = CategoryID;
                 item.price_start = Convert.ToInt32((Price).ToString().Replace(",", ""));
@@ -182,7 +182,7 @@ namespace Data.Business
         {
             try
             {
-                List<ListProductOutputModel> listProMen = cnn.products.Where(u => u.is_active.Equals(SystemParam.ACTIVE) 
+                List<ListProductOutputModel> listProMen = cnn.products.Where(u => u.is_active.Equals(SystemParam.ACTIVE)
                                                           && (u.product_categories.category_id == 1))
                 .Select(u => new ListProductOutputModel
                 {
@@ -195,7 +195,7 @@ namespace Data.Business
                     Name = u.product_name,
                     Is_Hot = u.is_hot,
                     Category_Name = u.product_categories.name_product_category
-                    
+
                 }).Take(8).ToList();
                 return listProMen;
             }
@@ -208,7 +208,7 @@ namespace Data.Business
         {
             try
             {
-                List<ListProductOutputModel> listProWMen = cnn.products.Where(u => u.is_active.Equals(SystemParam.ACTIVE) 
+                List<ListProductOutputModel> listProWMen = cnn.products.Where(u => u.is_active.Equals(SystemParam.ACTIVE)
                 && (u.product_categories.category_id == 0))
                 .Select(u => new ListProductOutputModel
                 {
@@ -233,10 +233,10 @@ namespace Data.Business
         {
             try
             {
-                List<ListProductOutputModel> listProKid =  (from u in cnn.products
+                List<ListProductOutputModel> listProKid = (from u in cnn.products
                                                            where u.is_active.Equals(SystemParam.ACTIVE)
                                                            && (u.product_categories.category_id == 2)
-                                                            select new ListProductOutputModel
+                                                           select new ListProductOutputModel
                                                            {
                                                                ID = u.id,
                                                                ImgUrl = u.image_url,
@@ -250,7 +250,7 @@ namespace Data.Business
                                                            }).Take(8).ToList();
                 return listProKid;
             }
-            catch 
+            catch
             {
                 return new List<ListProductOutputModel>();
             }

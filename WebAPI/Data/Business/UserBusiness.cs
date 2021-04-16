@@ -17,7 +17,7 @@ namespace Data.Business
         public UserBusiness(TranDungShopEntities context = null) : base()
         {
         }
-        
+
         public List<ListCustomerOutputModel> Search(string Phone, string FromDate, string ToDate)
         {
             try
@@ -51,7 +51,7 @@ namespace Data.Business
         {
             try
             {
-                users u = cnn.users.Find(ID);
+                user u = cnn.users.Find(ID);
                 u.pass = Util.GenPass(SystemParam.RESET_PASSWORD);
                 cnn.SaveChanges();
                 return SystemParam.SUCCESS;
@@ -73,7 +73,7 @@ namespace Data.Business
                     return SystemParam.WRONG_PASSWORD;
                 }
 
-                users users = cnn.users.Find(ID);
+                user users = cnn.users.Find(ID);
                 users.pass = Util.GenPass(NewPassword);
                 cnn.SaveChanges();
                 return SystemParam.SUCCESS;
@@ -97,7 +97,7 @@ namespace Data.Business
                 //query lấy ra count của bảng user để gán id cho user mới
                 var query = cnn.users.Select(u => u);
 
-                users user = new users();
+                user user = new user();
                 user.id = query.Count();
                 user.phone = Phone;
                 user.pass = Util.GenPass(usersPass);
@@ -120,7 +120,7 @@ namespace Data.Business
         {
             try
             {
-                users users = cnn.users.Find(ID);
+                user users = cnn.users.Find(ID);
                 users.is_active = SystemParam.ACTIVE_FALSE;
                 cnn.SaveChanges();
                 return SystemParam.SUCCESS;

@@ -70,6 +70,10 @@
       <HintPath>..\packages\Facebook.7.0.6\lib\net45\Facebook.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\ViCoGroup\Helpers.dll</HintPath>
+    </Reference>
     <Reference Include="Mail, Version=3.0.19162.1801, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
       <HintPath>..\packages\Mail.dll.3.0.19162.1801\lib\net45\Mail.dll</HintPath>
       <Private>True</Private>
@@ -261,24 +265,12 @@
     <Compile Include="Areas\Admin\Controllers\NewsController.cs" />
     <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\SecurityController.cs" />
     <Compile Include="Areas\Admin\Controllers\SlideController.cs" />
+    <Compile Include="Areas\Admin\Controllers\StatisticsController.cs" />
     <Compile Include="Areas\Admin\Controllers\UserController.cs" />
-    <Compile Include="Areas\Admin\Models\DataBaseModel.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataBaseModel.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\DataBaseModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataBaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Areas\Admin\Models\DataBaseModel.Designer.cs" />
     <Compile Include="Areas\Admin\Models\DataPoint.cs" />
-    <Compile Include="Areas\Admin\Models\DataService.cs" />
-    <Compile Include="Areas\Admin\Models\Point.cs">
-      <DependentUpon>DataBaseModel.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Areas\Admin\Models\RegisterViewModel.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CartController.cs" />
@@ -296,14 +288,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Areas\Admin\Models\DataBaseModel.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataBaseModel.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Areas\Admin\Models\DataBaseModel.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <LastGenOutput>DataBaseModel.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\ckeditor\adapters\jquery.js" />
@@ -1743,13 +1727,10 @@
     <Content Include="Areas\Admin\Views\Slide\_EditSlide.cshtml" />
     <Content Include="Content\css\jquery.simpleGallery.css" />
     <Content Include="Areas\Admin\Views\ChartTypes\Area.cshtml" />
-    <EntityDeploy Include="Areas\Admin\Models\DataBaseModel.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>DataBaseModel1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Areas\Admin\Models\DataBaseModel.edmx.diagram">
-      <DependentUpon>DataBaseModel.edmx</DependentUpon>
-    </Content>
+    <Content Include="Areas\Admin\Views\Security\Register.cshtml" />
+    <Content Include="Areas\Admin\Views\Security\ListUser.cshtml" />
+    <Content Include="Areas\Admin\Views\Security\Login.cshtml" />
+    <Content Include="Areas\Admin\Views\Security\GetRoleForUser.cshtml" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <Content Include="Scripts\ckeditor\ckeditor.pack" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
@@ -1813,9 +1794,11 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Views\Base\" />
+    <Folder Include="Areas\Admin\Views\Statistics\" />
     <Folder Include="Content\ckfinder\skins\bootstrap\images\icons\16\" />
     <Folder Include="Content\ckfinder\skins\bootstrap\images\icons\32\" />
     <Folder Include="Content\ckfinder\userfiles\" />
+    <Folder Include="Views\Security\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

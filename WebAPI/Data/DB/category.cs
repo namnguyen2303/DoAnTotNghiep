@@ -6,28 +6,25 @@ namespace Data.DB
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
 
-    public partial class cart
+    public partial class category
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public cart()
+        public category()
         {
-            cartDetails = new HashSet<cartDetail>();
+            product_categories = new HashSet<product_categories>();
         }
 
         [Key]
         public int id { get; set; }
 
-        public int? createDate { get; set; }
+        [StringLength(255)]
+        public string name_category { get; set; }
 
-        public int customerId { get; set; }
+        public int is_active { get; set; }
 
-        public decimal totalPrices { get; set; }
-
-        public int totalItems { get; set; }
+        public DateTime? created_at { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<cartDetail> cartDetails { get; set; }
-
-        public virtual customer customer { get; set; }
+        public virtual ICollection<product_categories> product_categories { get; set; }
     }
 }

@@ -15,7 +15,7 @@ namespace Data.Business
     public class NewsBusiness : GenericBusiness
     {
         public NewsBusiness(TranDungShopEntities context = null) : base()
-        { 
+        {
         }
         //public List<CategoryModel> ListCategory()
         //{
@@ -54,7 +54,7 @@ namespace Data.Business
                 List<ListNewsWebOutputModel> list = (from p in cnn.news
                                                      where p.is_active.Equals(SystemParam.ACTIVE)
                                                      && (!String.IsNullOrEmpty(Name) ? p.summary.ToLower().Contains(Name.ToLower()) : true)
-                                                    // && (Category_id != 0 ? p.post_category_id.Equals(Category_id) : true)
+                                                     // && (Category_id != 0 ? p.post_category_id.Equals(Category_id) : true)
                                                      && (fd.HasValue ? p.created_at >= fd.Value : true)
                                                      && (td.HasValue ? p.created_at <= td.Value : true)
                                                      orderby p.id descending
@@ -62,10 +62,10 @@ namespace Data.Business
                                                      {
                                                          ID = p.id,
                                                          Title = p.summary,
-                                                         Content = p.detail,
+                                                         Content = p.content,
                                                          UrlImage = p.imageUrl,
-                                                        // CategoryID = p.post_category_id,
-                                                        // CategoryName = p.post_category.name,
+                                                         // CategoryID = p.post_category_id,
+                                                         // CategoryName = p.post_category.name,
                                                          CreateDate = p.created_at
                                                      }).ToList();
 
@@ -88,7 +88,7 @@ namespace Data.Business
                 item.summary = Name;
                 item.imageUrl = ImageUrl;
                 item.created_at = DateTime.Now;
-                item.detail = Description;
+                item.content = Description;
                 //item.type_new = type;
                 item.is_active = SystemParam.ACTIVE;
                 cnn.news.Add(item);
@@ -112,7 +112,7 @@ namespace Data.Business
                 Item.Title = obj.summary;
                 Item.UrlImage = obj.imageUrl;
                 Item.Depcription = obj.summary;
-                Item.Content = obj.detail;
+                Item.Content = obj.content;
                 Item.Type = obj.type_new;
                 return Item;
             }
@@ -131,7 +131,7 @@ namespace Data.Business
                 item.summary = Name;
                 item.imageUrl = ImageUrl;
                 item.summary = Description;
-                item.detail = Note;
+                item.content = Note;
                 //item.type_new = type;
                 cnn.SaveChanges();
                 return SystemParam.RETURN_TRUE;
@@ -159,7 +159,7 @@ namespace Data.Business
             }
         }
 
-        
+
         //public List<ListNewsWebOutputModel> ListPostNew()
         //{
         //    try
@@ -225,7 +225,7 @@ namespace Data.Business
                                                      {
                                                          ID = p.id,
                                                          Title = p.summary,
-                                                         Content = p.detail,
+                                                         Content = p.content,
                                                          UrlImage = p.imageUrl,
                                                          CreateDate = p.created_at
                                                      }).Take(3).ToList();
@@ -267,7 +267,7 @@ namespace Data.Business
         //    }
         //}
 
-        public ListNewsWebOutputModel NewsDetail(int ID)
+        public ListNewsWebOutputModel Newscontent(int ID)
         {
             try
             {
@@ -275,7 +275,7 @@ namespace Data.Business
                 ListNewsWebOutputModel p = new ListNewsWebOutputModel();
                 p.ID = post.id;
                 p.Title = post.summary;
-                p.Content = post.detail;
+                p.Content = post.content;
                 p.UrlImage = post.imageUrl;
                 return p;
             }

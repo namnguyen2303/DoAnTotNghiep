@@ -1,0 +1,97 @@
+﻿@using APIProject.Areas.Admin.Models;
+@model RegisterViewModel
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel"><i class="fa fa-user-secret" aria-hidden="false"></i> Thêm tài khoản</h5>
+    </div>
+    <div class="modal-body">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="row">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Tên người dùng</label>
+                <input class="form-control" name="name_customer" placeholder="Nhập tên người dùng" />
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Số điện thoại</label>*
+                <input class="form-control" name="phone" placeholder="Nhập số điện thoại" maxlength="10" />
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Email</label>*
+                <input type="email" class="form-control" name="email" placeholder="Nhập email" />
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Mật khẩu</label>*
+                <div class="input-group" id="show_hide_password">
+                    <input class="form-control" name="pass" onkeydown="return event.keyCode == 32 ? false:true" type="password" id="txtPassCreateUser" />
+                    <div class="input-group-addon">
+                        <a href=""><i class="fa fa-eye-slash btn btn-secondary" aria-hidden="true" style="font-size:24px"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Xác nhận mật khẩu</label>*
+                <div class="input-group" id="confirmPassword">
+                    <input class="form-control" name="confimPass" inputmode="confimPass" onkeydown="return event.keyCode == 32 ? false:true" type="password" id="txtRePassCreateUser" />
+                    <div class="input-group-addon">
+                        <a href=""><i class="fa fa-eye-slash btn btn-secondary" aria-hidden="true" style="font-size:24px"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary px-3">Đăng ký</button>
+    </div>
+
+}
+<script>
+    $("#txtPhoneUser, #txtFromDateUser, #txtToDateUser").keypress(function (e) {
+        if (e.keyCode == 13) {
+            searchUser();
+        }
+    });
+    $(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("fa-eye-slash");
+                $('#show_hide_password i').removeClass("fa-eye");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("fa-eye-slash");
+                $('#show_hide_password i').addClass("fa-eye");
+            }
+        });
+
+        $("#confirmPassword a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#confirmPassword input').attr("type") == "text") {
+                $('#confirmPassword input').attr('type', 'password');
+                $('#confirmPassword i').addClass("fa-eye-slash");
+                $('#confirmPassword i').removeClass("fa-eye");
+            } else if ($('#confirmPassword input').attr("type") == "password") {
+                $('#confirmPassword input').attr('type', 'text');
+                $('#confirmPassword i').removeClass("fa-eye-slash");
+                $('#confirmPassword i').addClass("fa-eye");
+            }
+        });
+    });
+</script>

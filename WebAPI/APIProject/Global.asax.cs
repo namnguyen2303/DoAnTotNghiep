@@ -1,5 +1,7 @@
-﻿using System;
+﻿using Data.DB;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
@@ -13,6 +15,7 @@ namespace APIProject
     {
         protected void Application_Start()
         {
+            Database.SetInitializer<TranDungShopEntities>(null);
             AreaRegistration.RegisterAllAreas();
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);

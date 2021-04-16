@@ -18,7 +18,7 @@ namespace Data.Business
         public SlideBusiness(TranDungShopEntities context = null) : base()
         {
         }
-        
+
         public List<ListSlideOutputModel> Search(string FromDate, string ToDate)
         {
             try
@@ -51,7 +51,7 @@ namespace Data.Business
             try
             {
                 var q = cnn.slides.Select(u => u);
-                slides item = new slides();
+                slide item = new slide();
                 item.id = q.Count();
                 item.image_url = ImageUrl;
                 item.created_at = DateTime.Now;
@@ -101,7 +101,7 @@ namespace Data.Business
         {
             try
             {
-                slides item = cnn.slides.Find(ID);
+                slide item = cnn.slides.Find(ID);
                 item.image_url = ImageUrl;
                 //item.updated_at = DateTime.Now;
                 cnn.SaveChanges();
