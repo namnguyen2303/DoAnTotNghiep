@@ -14,7 +14,7 @@
             carts = new HashSet<cart>();
             orders = new HashSet<order>();
             ratings = new HashSet<rating>();
-            userRoles = new HashSet<userRole>();
+
         }
         [Key]
 
@@ -64,9 +64,6 @@
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<rating> ratings { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<userRole> userRoles { get; set; }
 
         public virtual customerType CustomerType { get; set; }
     }

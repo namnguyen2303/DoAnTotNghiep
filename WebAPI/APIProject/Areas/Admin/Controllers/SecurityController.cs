@@ -1,6 +1,7 @@
 ﻿using APIProject.Areas.Admin.Models;
 using APIProject.Controllers;
 using Data.DB;
+using Data.Utils;
 using Helpers;
 using PagedList;
 using System;
@@ -14,20 +15,27 @@ using System.Web.Security;
 
 namespace APIProject.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin,member")]
     public class SecurityController : BaseController
     {
         TranDungShopEntities _db = new TranDungShopEntities();
-        // GET: Admin/Identity
+
+        public SecurityController()
+        {
+
+        }
+
         [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
+
         [AllowAnonymous]
         [HttpPost]
-        public ActionResult Login(LoginViewModel model)
+        public ActionResult Login(LoginAdminViewModel model)
         {
-            var res = _db.customers.SingleOrDefault(x => x.email.ToUpper() == model.email);
+            var res = _db.users.SingleOrDefault(x => x.username.ToUpper() == model.username);
             if (res == null)
             {
                 ModelState.AddModelError("", @"Sai tài khoản");
@@ -46,71 +54,68 @@ namespace APIProject.Areas.Admin.Controllers
             }
             if (roles.Length > 1)
             {
-                roles = roles.Substring(0, roles.Length - 1);
+                roles = roles.Substring(0, roles.Length - 1).ToLower();
             }
-            SetRoles(model.email, roles);
-            return RedirectToAction("ListUser");
+            FormsAuthentication.SignOut();
+            SetRoles(model.username, roles);
+            return RedirectToAction("GetAllUser");
         }
-        [AllowAnonymous]
+
         [HttpGet]
-        public ActionResult Register()
+        public ActionResult AddOrUpdate(int? id)
         {
+            if (id != null)
+            {
+                var user = _db.users.Find(id);
+                if (user != null)
+                {
+                    return View(user);
+                }
+                else
+                {
+                    return HttpNotFound("Không tìm thấy");
+                }
+            }
             return View();
         }
-        [AllowAnonymous]
+
         [HttpPost]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public async Task<ActionResult> AddOrUpdate(user model)
         {
+            if (model.username.ToLower() == "admin")
+            {
+                ModelState.AddModelError("", @"Không được để tên là admin");
+                return View(model);
+            }
+
             if (ModelState.IsValid)
             {
-                var check = _db.customers.SingleOrDefault(x => x.email.ToUpper() == model.email.ToUpper());
-                if (check != null)
+                if (model.id == 0)
                 {
-                    ModelState.AddModelError("", @"Tài khoản đã được sử dụng");
-                    return View(model);
-                }
-                if (model.pass != model.confimPass)
-                {
-                    ModelState.AddModelError("", @"Mật khẩu xác nhận không khớp nhau");
-                    return View(model);
+                    var check = _db.users.Find(model.id);
+                    if (check != null)
+                    {
+                        ModelState.AddModelError("", @"Tài khoản đã được sử dụng");
+                        return View(model);
+                    }
                 }
 
-                var user = new customer()
-                {
-                    created_at = DateTime.Now,
-                    phone = model.phone,
-                    name_customer = model.name_customer,
-                    email = model.email,
-                };
-
-                var cusType = _db.customerTypes.FirstOrDefault(x => x.code == "MEMBER");
-                if (cusType != null) user.CustomerTypeId = cusType.id;
-
-                user.pass = HtmlHelpers.ComputeHash(model.pass, "SHA256", null);
-                _db.customers.Add(user);
+                model.status = 1;
+                model.is_active = 1;
+                model.pass = HtmlHelpers.ComputeHash(model.pass, "SHA256", null);
+                _db.users.AddOrUpdate(model);
                 _db.SaveChanges();
 
-                role role = _db.roles.SingleOrDefault(x => x.code.ToUpper() == "MEMBER");
-                if (role != null)
-                {
-                    var userRole = new userRole()
-                    {
-                        roleId = role.id,
-                        customerId = user.id
-                    };
-                    _db.userRoles.Add(userRole);
-                }
-                await _db.SaveChangesAsync();
-                return RedirectToAction(nameof(Login));
+                return RedirectToAction("GetAllUser");
             }
             return View(model);
         }
 
         public void SetRoles(string userName, string roles)
         {
+
             FormsAuthentication.Initialize();
-            var ticket = new FormsAuthenticationTicket(1, userName,
-                                                        DateTime.Now, //time begin
+            var ticket = new FormsAuthenticationTicket(1, userName, DateTime.Now, //time begin
                                                         DateTime.Now.AddDays(3), //timeout
                                                         false, roles,
                                                         FormsAuthentication.FormsCookiePath);
@@ -118,21 +123,35 @@ namespace APIProject.Areas.Admin.Controllers
             if (ticket.IsPersistent)
                 cookie.Expires = ticket.Expiration;
 
-            //FormsAuthenticationTicket item = 
-
             Response.Cookies.Add(cookie);
         }
 
-        customer GetUserNameFromCookie()
+        string getUserName()
         {
-            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+            string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name 
             HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
             if (authCookie == null) return null;
             FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
             string email = ticket.Name; //You have the UserName!
+            return email;
+        }
 
-            var customer = _db.customers.FirstOrDefault(x => x.email == email);
-            return customer;
+        user GetUserNameFromCookie()
+        {
+            try
+            {
+                string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+                HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+                if (authCookie == null) return null;
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+                string username = ticket.Name; //You have the UserName!
+                var customer = _db.users.FirstOrDefault(x => x.username == username);
+                return customer;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
         public ActionResult Logout()
         {
@@ -141,20 +160,35 @@ namespace APIProject.Areas.Admin.Controllers
         }
 
         [HttpGet]
-        public ActionResult ListUser(int? page)
+        public ActionResult GetAllUser(int? page)
         {
+            var data = _db.users.Where(x => x.is_active == 1).OrderBy(x => x.id).ToPagedList(page ?? 1, SystemParam.PAGE_SIZE);
 
-            var data = _db.customers.OrderBy(x => x.id).ToPagedList(page ?? 1, 20);
-            ViewBag.Roles = _db.roles;
+            var user = GetUserNameFromCookie();
+            var roles = "";
+            if (user != null)
+            {
+                if (user.userRoles != null && user.userRoles.Any())
+                {
+                    foreach (var item in user.userRoles)
+                    {
+                        roles += item.role.name + ",";
+                    }
+                }
+                ViewBag.roles = roles;
+                ViewBag.username = user.username;
+            }
             return View(data);
         }
 
+        [Authorize(Roles = "admin")]
         [HttpGet]
         public ActionResult GetRoleForUser(int id)
         {
-            var item = _db.customers.FirstOrDefault(x => x.id == id);
+            var item = _db.users.Find(id);
             if (item != null)
             {
+                item.userRoles = item.userRoles.ToList();
                 ViewBag.Roles = _db.roles.AsEnumerable();
                 return View(item);
             }
@@ -162,22 +196,50 @@ namespace APIProject.Areas.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult GetRoleForUser(customer model, List<int> RoleIds)
+        [Authorize(Roles = "admin")]
+        public async Task<ActionResult> GetRoleForUser(user model, List<int> RoleIds)
         {
+            var item = _db.users.Find(model.id);
 
-            //var userRoles = db.UserRoles.Where(x => x.UserId == model.MaND).ToList();
+            if (item != null)
+            {
+                if (item.userRoles != null && item.userRoles.Any())
+                {
+                    _db.userRoles.RemoveRange(item.userRoles);
+                    _db.SaveChanges();
+                }
+            }
+
             foreach (var id in RoleIds)
             {
                 var userRole = new userRole()
                 {
                     roleId = id,
-                    customerId = model.id
+                    userId = model.id
                 };
                 _db.userRoles.AddOrUpdate(userRole);
             }
-            _db.SaveChanges();
-            return RedirectToAction("ListUser");
+
+            await _db.SaveChangesAsync();
+
+            if (model.username == getUserName())
+            {
+                FormsAuthentication.SignOut();
+                return RedirectToAction("Login");
+            }
+            return RedirectToAction("GetAllUser");
         }
 
+        public async Task<ActionResult> DeleteUser(int id)
+        {
+            var item = _db.users.Find(id);
+            if (item != null)
+            {
+                item.is_active = 0;
+                await _db.SaveChangesAsync();
+
+            }
+            return RedirectToAction("GetAllUser");
+        }
     }
 }

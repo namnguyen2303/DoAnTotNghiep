@@ -82,9 +82,7 @@ namespace Data.Business
         {
             try
             {
-                var q = cnn.news.Select(u => u);
                 news item = new news();
-                item.id = q.Count();
                 item.summary = Name;
                 item.imageUrl = ImageUrl;
                 item.created_at = DateTime.Now;

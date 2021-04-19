@@ -18,7 +18,7 @@ namespace Data.Business
         public CategoryBusiness(TranDungShopEntities context = null) : base()
         {
         }
-        
+
         public List<ListCategoryOutputModel> SearchProduct(string Name, string FromDate, string ToDate)
         {
             try
@@ -117,16 +117,10 @@ namespace Data.Business
         {
             try
             {
-                //if (CheckDuplicateCategory(Name))
-                //{
-                //    return SystemParam.DUPLICATE_NAME;
-                //}
-                var q = cnn.product_categories.Select(u => u);
+
                 product_categories pro = new product_categories();
-                //pro.status = SystemParam.ACTIVE;
+
                 pro.name_product_category = Name;
-                pro.category_id = 1;
-                pro.id = q.Count();
                 pro.created_at = DateTime.Now;
                 pro.is_active = SystemParam.ACTIVE;
                 cnn.product_categories.Add(pro);
@@ -139,30 +133,6 @@ namespace Data.Business
                 return SystemParam.RETURN_FALSE;
             }
         }
-
-        //public int CreateCategoryPost(string Name)
-        //{
-        //    try
-        //    {
-        //        if (CheckDuplicatePostCategory(Name))
-        //        {
-        //            return SystemParam.DUPLICATE_NAME;
-        //        }
-        //        post_category pro = new post_category();
-        //        pro.is_active = SystemParam.ACTIVE;
-        //        pro.status = SystemParam.ACTIVE;
-        //        pro.name = Name;
-        //        pro.created_at = DateTime.Now;
-        //        cnn.post_category.Add(pro);
-        //        cnn.SaveChanges();
-        //        return SystemParam.RETURN_TRUE;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        ex.ToString();
-        //        return SystemParam.RETURN_FALSE;
-        //    }
-        //}
 
         public int DeleteCategoryProduct(int ID)
         {
@@ -263,7 +233,7 @@ namespace Data.Business
         {
             try
             {
-                List<ListCategoryOutputModel> listCate = cnn.product_categories.Where(u => u.category_id == 0).
+                List<ListCategoryOutputModel> listCate = cnn.product_categories.Where(u => u.category_id == 0)?.
                                                         Select(u => new ListCategoryOutputModel
                                                         {
                                                             ID = u.id,
@@ -276,16 +246,16 @@ namespace Data.Business
                 return new List<ListCategoryOutputModel>();
             }
         }
-        public List<ListCategoryOutputModel> getCategories1()
+        public IEnumerable<ListCategoryOutputModel> getCategories1()
         {
             try
             {
-                List<ListCategoryOutputModel> listCate = cnn.product_categories.Where(u => u.category_id == 1).
+                IEnumerable<ListCategoryOutputModel> listCate = cnn.product_categories.Where(u => u.category_id == 1)?.
                                                         Select(u => new ListCategoryOutputModel
                                                         {
                                                             ID = u.id,
                                                             Name = u.name_product_category
-                                                        }).ToList();
+                                                        });
                 return listCate;
             }
             catch

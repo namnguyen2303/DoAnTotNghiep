@@ -1,4 +1,4 @@
-namespace Data.DB
+﻿namespace Data.DB
 {
     using System;
     using System.Collections.Generic;
@@ -13,25 +13,25 @@ namespace Data.DB
         {
             news = new HashSet<news>();
             orders = new HashSet<order>();
+            userRoles = new HashSet<userRole>();
         }
 
         [Key]
         public int id { get; set; }
 
-        [Required]
         [StringLength(50)]
         public string code { get; set; }
 
         public int? status { get; set; }
+        //public int roleId { get; set; }
 
-        public int? role { get; set; }
-
-        [StringLength(100)]
+        [StringLength(100), Required(ErrorMessage = "Tài khoản không được bỏ trống")]
         public string username { get; set; }
 
+        [StringLength(100), Required(ErrorMessage = "Mật khẩu không được bỏ trống")]
         public string pass { get; set; }
 
-        [StringLength(15)]
+        [StringLength(15), Required(ErrorMessage = "Số điện thoại không được bỏ trống"), Phone(ErrorMessage = "Không đúng định dạng")]
         public string phone { get; set; }
 
         public int is_active { get; set; }
@@ -43,5 +43,9 @@ namespace Data.DB
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<order> orders { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<userRole> userRoles { get; set; }
+
     }
 }

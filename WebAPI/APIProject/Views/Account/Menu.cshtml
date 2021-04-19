@@ -1,0 +1,85 @@
+﻿@using Data.DB;
+@model customer
+
+
+<ul class="aa-head-top-nav-right">
+
+    <li class="hidden-xs"><a href="/Wishlist/Index">Yêu thích</a></li>
+    <li class="hidden-xs"><a href="@Url.Action("Index","Cart")">Giỏ hàng của tôi</a></li>
+    <li class="hidden-xs"><a href="@Url.Action("CheckOut","Cart")">Checkout</a></li>
+    @*<li><a href="" data-toggle="modal" data-target="#login-modal">Đăng nhập</a></li>*@
+    @if (Model != null)
+    {
+
+        @*<li class="hidden-xs"><a href="checkout.html">Checkout</a></li>*@
+        @*<li><a href="" data-toggle="modal" data-target="#login-modal">Đăng nhập</a></li>*@
+        @*<li>
+                <a href="javascript:;">Tài khoản</a>
+            </li>*@
+        <li class="parent-list hidden-xs">
+            <a href="javascript:;">
+                Thông tin người dùng
+            </a>
+            <ul class="childrent shadow-sm bg-dark">
+                <li style="padding-left: 20px;">
+                    @Model.email
+                </li>
+                <li>
+                    <a href="@Url.Action("Index","OrderHistory")">
+                        Lịch sử mua hàng
+                    </a>
+                </li>
+                <li>
+                    <a href="@Url.Action("Logout","Account")">
+                        Đăng xuất
+                    </a>
+                </li>
+            </ul>
+        </li>
+    }
+    else
+    {
+        <li class="hidden-xs">
+            <a href="@Url.Action("Login", "Account")">
+                Đăng Nhập
+            </a>
+        </li>
+        <li class="hidden-xs">
+            <a href="@Url.Action("Register", "Account")">
+                Đăng Ký
+            </a>
+        </li>
+    }
+</ul>
+
+
+
+<style>
+    li.parent-list {
+        position: relative;
+    }
+
+        li.parent-list:hover ul.childrent {
+            display: block;
+        }
+
+    ul.childrent {
+        position: absolute;
+        background: #fff;
+        z-index: 1000;
+        min-width: 200px;
+        left: 16px;
+        display: none;
+        box-shadow: 0 .5rem 1rem rgba(0,0,0,.15);
+    }
+
+        ul.childrent li {
+            padding-left: 15px;
+            float: left;
+            margin-top: 1rem;
+        }
+
+            ul.childrent li a {
+                border: none !important;
+            }
+</style>

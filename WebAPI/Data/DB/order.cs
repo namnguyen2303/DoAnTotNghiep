@@ -17,8 +17,8 @@ namespace Data.DB
         public int id { get; set; }
 
         public int customer_id { get; set; }
-
-        public int user_id { get; set; }
+        [ForeignKey("user")]
+        public int? userId { get; set; }
 
         public int? status { get; set; }
 
@@ -29,17 +29,17 @@ namespace Data.DB
         [StringLength(255)]
         public string note { get; set; }
 
-        public int is_active { get; set; }
-
         public DateTime? created_at { get; set; }
 
         public int totalItem { get; set; }
+        [ForeignKey("Payment")]
+        public int paymentId { get; set; }
 
         public virtual customer customer { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<orderDetail> orderDetails { get; set; }
-
+        public virtual payment Payment { get; set; }
         public virtual user user { get; set; }
     }
 }

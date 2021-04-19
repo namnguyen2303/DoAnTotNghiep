@@ -26,7 +26,7 @@ namespace Data.Business
                 DateTime? td = Util.ConvertDate(ToDate);
 
                 List<ListCustomerOutputModel> list = (from u in cnn.users
-                                                      where u.is_active.Equals(SystemParam.ACTIVE) && u.role == SystemParam.ROLE_ADMIN
+                                                      where u.is_active.Equals(SystemParam.ACTIVE)
                                                       && (!String.IsNullOrEmpty(Phone) ? u.username.ToLower().Contains(Phone.ToLower()) || u.phone.ToLower().Contains(Phone.ToLower()) : true)
                                                       && (fd.HasValue ? u.created_at >= fd.Value : true)
                                                       && (td.HasValue ? u.created_at <= td.Value : true)
@@ -95,14 +95,12 @@ namespace Data.Business
                     return SystemParam.EXISTING;
                 }
                 //query lấy ra count của bảng user để gán id cho user mới
-                var query = cnn.users.Select(u => u);
 
                 user user = new user();
-                user.id = query.Count();
                 user.phone = Phone;
                 user.pass = Util.GenPass(usersPass);
                 user.username = usersName;
-                user.role = 1;
+
                 user.is_active = SystemParam.ACTIVE;
                 user.created_at = DateTime.Now;
                 cnn.users.Add(user);

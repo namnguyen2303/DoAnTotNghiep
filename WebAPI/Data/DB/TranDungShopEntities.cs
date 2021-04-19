@@ -29,6 +29,7 @@ namespace Data.DB
         public virtual DbSet<slide> slides { get; set; }
         public virtual DbSet<userRole> userRoles { get; set; }
         public virtual DbSet<user> users { get; set; }
+        public virtual DbSet<payment> payments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -91,9 +92,9 @@ namespace Data.DB
                 .HasForeignKey(e => e.customer_id)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<customer>()
+            modelBuilder.Entity<user>()
                 .HasMany(e => e.userRoles)
-                .WithRequired(e => e.customer)
+                .WithRequired(e => e.user)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<news>()
@@ -214,12 +215,6 @@ namespace Data.DB
 
             modelBuilder.Entity<user>()
                 .HasMany(e => e.news)
-                .WithRequired(e => e.user)
-                .HasForeignKey(e => e.user_id)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<user>()
-                .HasMany(e => e.orders)
                 .WithRequired(e => e.user)
                 .HasForeignKey(e => e.user_id)
                 .WillCascadeOnDelete(false);

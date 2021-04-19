@@ -1,29 +1,53 @@
 ﻿@using Data.DB;
 @using Data.Model;
+
 @model List<ListSlideOutputModel>
+
+
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var listSlide = ViewBag.listSlide as IEnumerable<ListSlideOutputModel>;
+    var spHots = ViewBag.SpHot as IEnumerable<ListProductOutputModel>;
+    var spnam = @ViewBag.SpNamHot as ListProductOutputModel;
 }
 
+@{
+
+    var listProme = ViewBag.listProMen as IEnumerable<ListProductOutputModel>;
+    var listWomen = ViewBag.listProWoMen as IEnumerable<ListProductOutputModel>;
+    var listProKid = ViewBag.listProKid as IEnumerable<ListProductOutputModel>;
+    var producHots = ViewBag.listProHot as IEnumerable<ListProductOutputModel>;
+    var productNews = ViewBag.listProNew as IEnumerable<ListProductOutputModel>;
+    var productSales = ViewBag.listProSale as IEnumerable<ListProductOutputModel>;
+    var topNews = ViewBag.listTopNews as IEnumerable<ListNewsWebOutputModel>;
+}
+
+
 <script src="~/Scripts/js/jquery.min.js"></script>
+
 <section id="aa-slider">
     <div class="aa-slider-area">
         <div id="sequence" class="seq">
             <div class="seq-screen">
                 <ul class="seq-canvas">
-                    @foreach (var item in ViewBag.listSlide)
+                    @if (listSlide != null && listSlide.Any())
                     {
-                        <li>
-                            <div class="seq-model">
-                                <img data-seq src="@item.ImgUrl" alt="Women Jeans slide img" />
-                            </div>
-                            <div class="seq-title">
-                                <span data-seq>@item.summary</span>
-                                <h2 data-seq>Jeans Collection</h2>
-                                <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
-                            </div>
-                        </li>
+                        foreach (var item in listSlide)
+                        {
+                            <li>
+                                <div class="seq-model">
+                                    <img data-seq src="@item.ImgUrl" alt="Women Jeans slide img" />
+                                </div>
+                                <div class="seq-title">
+                                    <span data-seq>@item.summary</span>
+                                    <h2 data-seq>Jeans Collection</h2>
+                                    <a data-seq href="#" class="aa-shop-now-btn aa-secondary-btn">SHOP NOW</a>
+                                </div>
+                            </li>
+                        }
                     }
+
                 </ul>
             </div>
             <!-- slider navigation btn -->
@@ -47,10 +71,29 @@
                         <div class="col-md-5 no-padding">
                             <div class="aa-promo-left">
                                 <div class="aa-promo-banner">
-                                    <a href=""><img src="@ViewBag.SpNamHot.ImgUrl" alt="img"></a>
+                                    <a href="">
+                                        @if (spnam != null)
+                                        {
+                                            <img src="@spnam.ImgUrl" alt="img">
+                                        }
+                                    </a>
                                     <div class="aa-prom-content">
                                         <span>75% Off</span>
-                                        <h4><a href="/ProductDetail/Index?ID=@ViewBag.SpNamHot.ID&Category_ID=@ViewBag.SpNamHot.Category_ID">For Men</a></h4>
+                                        <h4>
+                                            @if (spnam != null)
+                                            {
+                                                <a href="/ProductDetail/Index?ID=@spnam.ID&Category_ID=@spnam.Category_ID">
+                                                    For Men
+                                                </a>
+                                            }
+                                            else
+                                            {
+                                                <a href="jvascrpt:;">
+                                                    For Men
+                                                </a>
+                                            }
+
+                                        </h4>
                                     </div>
                                 </div>
                             </div>
@@ -58,21 +101,24 @@
                         <!-- promo right -->
                         <div class="col-md-7 no-padding">
                             <div class="aa-promo-right">
-                                @foreach (var item in ViewBag.SpHot)
+                                @if (spHots != null && spHots.Any())
                                 {
-                                    <a href="/ProductDetail/Index/@item.ID">
-                                        <div class="aa-single-promo-right">
-                                            <div class="aa-promo-banner">
+                                    foreach (var item in spHots)
+                                    {
+                                        <a href="/ProductDetail/Index/@item.ID">
+                                            <div class="aa-single-promo-right">
+                                                <div class="aa-promo-banner">
 
-                                                <img src="@item.ImgUrl" alt="img">
+                                                    <img src="@item.ImgUrl" alt="img">
 
-                                                <div class="aa-prom-content">
-                                                    <span>Sản Phẩm Hot</span>
-                                                    <h4><a href="/ProductDetail/Index?ID=@item.ID&Category_ID=@item.Category_ID">@item.Description</a></h4>
+                                                    <div class="aa-prom-content">
+                                                        <span>Sản Phẩm Hot</span>
+                                                        <h4><a href="/ProductDetail/Index?ID=@item.ID&Category_ID=@item.Category_ID">@item.Description</a></h4>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </a>
+                                        </a>
+                                    }
                                 }
                             </div>
                         </div>
@@ -103,27 +149,30 @@
                                 <div class="tab-pane fade in active" id="men">
                                     <ul class="aa-product-catg">
                                         <!-- start single product item -->
-                                        @foreach (var i in ViewBag.listProMen)
-                                        {
-                                            <li>
-                                                <figure>
-                                                    <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
-                                                    <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                    <figcaption>
-                                                        <h4 class="aa-product-title"><a href="#">@i.Name</a></h4>
-                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
-                                                    </figcaption>
-                                                </figure>
-                                                <div class="aa-product-hvr-content">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                                                </div>
-                                                <!-- product badge -->
-                                                @*<span class="aa-badge aa-sale" href="#">SALE!</span>*@
-                                            </li>
-                                        }
 
+                                        @if (listProme != null && listProme.Any())
+                                        {
+                                            foreach (var i in ViewBag.listProMen)
+                                            {
+                                                <li>
+                                                    <figure>
+                                                        <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
+                                                        <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                        <figcaption>
+                                                            <h4 class="aa-product-title"><a href="#">@i.Name</a></h4>
+                                                            <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                        </figcaption>
+                                                    </figure>
+                                                    <div class="aa-product-hvr-content">
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                                                    </div>
+                                                    <!-- product badge -->
+                                                    @*<span class="aa-badge aa-sale" href="#">SALE!</span>*@
+                                                </li>
+                                            }
+                                        }
                                     </ul>
                                     <a class="aa-browse-btn" href="/ListProductCategory/Index?Page=1&Category=1">Tất cả sản phẩm<span class="fa fa-long-arrow-right"></span></a>
                                 </div>
@@ -131,25 +180,28 @@
                                 <!-- start women product category -->
                                 <div class="tab-pane fade" id="women">
                                     <ul class="aa-product-catg">
-                                        @foreach (var i in ViewBag.listProWoMen)
+                                        @if (listWomen != null && listWomen.Any())
                                         {
-                                            <li>
-                                                <figure>
-                                                    <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
-                                                    <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                    <figcaption>
-                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                        <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
-                                                    </figcaption>
-                                                </figure>
-                                                <div class="aa-product-hvr-content">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                                                </div>
-                                                <!-- product badge -->
-                                                <span class="aa-badge aa-sale" href="#">SALE!</span>
-                                            </li>
+                                            foreach (var i in listWomen)
+                                            {
+                                                <li>
+                                                    <figure>
+                                                        <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
+                                                        <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                        <figcaption>
+                                                            <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
+                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                        </figcaption>
+                                                    </figure>
+                                                    <div class="aa-product-hvr-content">
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                                                    </div>
+                                                    <!-- product badge -->
+                                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                </li>
+                                            }
                                         }
                                     </ul>
                                     <a class="aa-browse-btn" href="/ListProductCategory/Index?Page=1&Category=2">Tất cả sản phẩm<span class="fa fa-long-arrow-right"></span></a>
@@ -158,26 +210,30 @@
                                 <!-- start sports product category -->
                                 <div class="tab-pane fade" id="kid">
                                     <ul class="aa-product-catg">
-                                        @foreach (var i in ViewBag.listProKid)
+                                        @if (listProKid != null && listProKid.Any())
                                         {
-                                            <li>
-                                                <figure>
-                                                    <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
-                                                    <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                    <figcaption>
-                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
-                                                    </figcaption>
-                                                </figure>
-                                                <div class="aa-product-hvr-content">
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                                                </div>
-                                                <!-- product badge -->
-                                                <span class="aa-badge aa-sale" href="#">SALE!</span>
-                                            </li>
+                                            foreach (var i in ViewBag.listProKid)
+                                            {
+                                                <li>
+                                                    <figure>
+                                                        <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
+                                                        <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                        <figcaption>
+                                                            <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
+                                                            <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                        </figcaption>
+                                                    </figure>
+                                                    <div class="aa-product-hvr-content">
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
+                                                        <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                                                    </div>
+                                                    <!-- product badge -->
+                                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                </li>
+                                            }
                                         }
+
                                     </ul>
                                     <a class="aa-browse-btn" href="/ListProductCategory/Index?Page=1&Category=0">Tất cả sản phẩm<span class="fa fa-long-arrow-right"></span></a>
                                 </div>
@@ -310,23 +366,26 @@
                             <div class="tab-pane fade in active" id="popular">
                                 <ul class="aa-product-catg aa-popular-slider">
                                     <!-- start single product item -->
-                                    @foreach (var i in ViewBag.listProHot)
+                                    @if (producHots != null && producHots.Any())
                                     {
-                                        <li>
-                                            <figure>
-                                                <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
-                                                <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                    <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
-                                                </figcaption>
-                                            </figure>
-                                            <div class="aa-product-hvr-content">
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                                                <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                                            </div>
-                                        </li>
+                                        foreach (var i in producHots)
+                                        {
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
+                                                    <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                    <figcaption>
+                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
+                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                                                </div>
+                                            </li>
+                                        }
                                     }
                                 </ul>
                             </div>
@@ -335,23 +394,26 @@
                             <div class="tab-pane fade" id="featured">
                                 <ul class="aa-product-catg aa-featured-slider">
                                     <!-- start single product item -->
-                                    @foreach (var i in ViewBag.listProNew)
+                                    @if (productNews != null && productNews.Any())
                                     {
-                                        <li>
-                                            <figure>
-                                                <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
-                                                <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                    <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
-                                                </figcaption>
-                                            </figure>
-                                            <div class="aa-product-hvr-content">
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                                                <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                                            </div>
-                                        </li>
+                                        foreach (var i in productNews)
+                                        {
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
+                                                    <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                    <figcaption>
+                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
+                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                                                </div>
+                                            </li>
+                                        }
                                     }
                                 </ul>
                             </div>
@@ -360,23 +422,26 @@
                             <div class="tab-pane fade" id="latest">
                                 <ul class="aa-product-catg aa-latest-slider">
                                     <!-- start single product item -->
-                                    @foreach (var i in ViewBag.listProSale)
+                                    @if (productSales != null && productSales.Any())
                                     {
-                                        <li>
-                                            <figure>
-                                                <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
-                                                <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                                <figcaption>
-                                                    <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                    <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
-                                                </figcaption>
-                                            </figure>
-                                            <div class="aa-product-hvr-content">
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                                                <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                                                <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                                            </div>
-                                        </li>
+                                        foreach (var i in productSales)
+                                        {
+                                            <li>
+                                                <figure>
+                                                    <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
+                                                    <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                                    <figcaption>
+                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
+                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                    </figcaption>
+                                                </figure>
+                                                <div class="aa-product-hvr-content">
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
+                                                    <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                                                </div>
+                                            </li>
+                                        }
                                     }
                                 </ul>
                             </div>
@@ -487,26 +552,29 @@
                     <h2>TIN TỨC</h2>
                     <div class="row">
                         <!-- single latest blog -->
-                        @foreach (var item in ViewBag.listTopNews)
+                        @if (topNews != null && topNews.Any())
                         {
-                            <div class="col-md-4 col-sm-4">
-                                <div class="aa-latest-blog-single">
-                                    <figure class="aa-blog-img">
-                                        <a href="/News/Index/@item.ID"><img src="@item.UrlImage" alt="img"></a>
-                                        <figcaption class="aa-blog-img-caption">
-                                            @*<span href="#"><i class="fa fa-eye"></i>5K</span>
-                                                <a href="#"><i class="fa fa-thumbs-o-up"></i>426</a>
-                                                <a href="#"><i class="fa fa-comment-o"></i>20</a>*@
-                                            <span href="#"><i class="fa fa-clock-o"></i>@item.CreateDateStr</span>
-                                        </figcaption>
-                                    </figure>
-                                    <div class="aa-blog-info">
-                                        <h3 class="aa-blog-title"><a href="#">@item.Title</a></h3>
-                                        <p>@item.Content</p>
-                                        <a href="/News/Index/@item.ID" class="aa-read-mor-btn">Chi tiết ... <span class="fa fa-long-arrow-right"></span></a>
+                            foreach (var item in ViewBag.listTopNews)
+                            {
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="aa-latest-blog-single">
+                                        <figure class="aa-blog-img">
+                                            <a href="/News/Index/@item.ID"><img src="@item.UrlImage" alt="img"></a>
+                                            <figcaption class="aa-blog-img-caption">
+                                                @*<span href="#"><i class="fa fa-eye"></i>5K</span>
+                                                    <a href="#"><i class="fa fa-thumbs-o-up"></i>426</a>
+                                                    <a href="#"><i class="fa fa-comment-o"></i>20</a>*@
+                                                <span href="#"><i class="fa fa-clock-o"></i>@item.CreateDateStr</span>
+                                            </figcaption>
+                                        </figure>
+                                        <div class="aa-blog-info">
+                                            <h3 class="aa-blog-title"><a href="#">@item.Title</a></h3>
+                                            <p>@item.Content</p>
+                                            <a href="/News/Index/@item.ID" class="aa-read-mor-btn">Chi tiết ... <span class="fa fa-long-arrow-right"></span></a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            }
                         }
 
                     </div>

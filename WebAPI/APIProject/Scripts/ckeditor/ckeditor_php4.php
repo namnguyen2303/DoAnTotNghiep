@@ -55,7 +55,7 @@ class CKEditor
 	 * Set it to true only if you have already included
 	 * &lt;script&gt; tag loading ckeditor.js in your website.
 	 */
-	var $initialized = false;
+	var $initialized = true;
 	/**
 	 * Boolean variable indicating whether created code should be printed out or returned by a function.
 	 *
@@ -68,7 +68,7 @@ class CKEditor
 	 * echo $code;
 	 * @endcode
 	 */
-	var $returnOutput = false;
+	var $returnOutput = true;
 	/**
 	 * An array with textarea attributes.
 	 *

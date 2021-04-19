@@ -16,12 +16,13 @@ namespace Data.DB
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]
-        public int customerId { get; set; }
+        [ForeignKey("user")]
+        public int userId { get; set; }
 
         [StringLength(250)]
         public string note { get; set; }
 
-        public virtual customer customer { get; set; }
+        public virtual user user { get; set; }
 
         public virtual role role { get; set; }
     }

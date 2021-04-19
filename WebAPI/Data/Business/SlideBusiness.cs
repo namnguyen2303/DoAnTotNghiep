@@ -50,9 +50,7 @@ namespace Data.Business
         {
             try
             {
-                var q = cnn.slides.Select(u => u);
                 slide item = new slide();
-                item.id = q.Count();
                 item.image_url = ImageUrl;
                 item.created_at = DateTime.Now;
                 item.is_active = SystemParam.ACTIVE;

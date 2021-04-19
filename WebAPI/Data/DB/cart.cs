@@ -17,7 +17,7 @@ namespace Data.DB
         [Key]
         public int id { get; set; }
 
-        public int? createDate { get; set; }
+        public DateTime? createDate { get; set; }
 
         public int customerId { get; set; }
 

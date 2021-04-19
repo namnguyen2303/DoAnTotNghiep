@@ -104,6 +104,7 @@
     <Compile Include="DB\news.cs" />
     <Compile Include="DB\order.cs" />
     <Compile Include="DB\orderDetail.cs" />
+    <Compile Include="DB\payment.cs" />
     <Compile Include="DB\product.cs" />
     <Compile Include="DB\product_categories.cs" />
     <Compile Include="DB\rating.cs" />
@@ -120,6 +121,18 @@
     <Compile Include="Migrations\202104151737470_editCustomer.cs" />
     <Compile Include="Migrations\202104151737470_editCustomer.Designer.cs">
       <DependentUpon>202104151737470_editCustomer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104170922009_addTablepayment.cs" />
+    <Compile Include="Migrations\202104170922009_addTablepayment.Designer.cs">
+      <DependentUpon>202104170922009_addTablepayment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104171604564_updatedatabase.cs" />
+    <Compile Include="Migrations\202104171604564_updatedatabase.Designer.cs">
+      <DependentUpon>202104171604564_updatedatabase.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104171629295_editUser.cs" />
+    <Compile Include="Migrations\202104171629295_editUser.Designer.cs">
+      <DependentUpon>202104171629295_editUser.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\CategoryModel.cs" />
@@ -148,6 +161,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104151737470_editCustomer.resx">
       <DependentUpon>202104151737470_editCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104170922009_addTablepayment.resx">
+      <DependentUpon>202104170922009_addTablepayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171604564_updatedatabase.resx">
+      <DependentUpon>202104171604564_updatedatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171629295_editUser.resx">
+      <DependentUpon>202104171629295_editUser.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

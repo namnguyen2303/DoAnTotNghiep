@@ -1,13 +1,15 @@
-﻿
+﻿@using Data.DB;
+@model product
+
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 @*<div id="wpf-loader-two">
-    <div class="wpf-loader-two-inner">
-        <span>Loading</span>
-    </div>
-</div>*@
+        <div class="wpf-loader-two-inner">
+            <span>Loading</span>
+        </div>
+    </div>*@
 <!-- / wpf loader Two -->
 <!-- SCROLL TOP BUTTON -->
 <a class="scrollToTop" href="#"><i class="fa fa-chevron-up"></i></a>
@@ -43,65 +45,69 @@
                                             <div class="simpleLens-big-image-container"><a data-lens-image="@ViewBag.ProductDetail.ImgUrl" class="simpleLens-lens-image"><img src="@ViewBag.ProductDetail.ImgUrl" class="simpleLens-big-image"></a></div>
                                         </div>
                                         @*<div class="simpleLens-thumbnails-container">
-                                            <a data-big-image="~/Content/img/view-slider/medium/polo-shirt-1.png" data-lens-image="~/Content/img/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="~/Content/img/view-slider/thumbnail/polo-shirt-1.png">
-                                            </a>
-                                            <a data-big-image="~/Content/img/view-slider/medium/polo-shirt-3.png" data-lens-image="~/Content/img/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="~/Content/img/view-slider/thumbnail/polo-shirt-3.png">
-                                            </a>
-                                            <a data-big-image="~/Content/img/view-slider/medium/polo-shirt-4.png" data-lens-image="~/Content/img/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
-                                                <img src="~/Content/img/view-slider/thumbnail/polo-shirt-4.png">
-                                            </a>
-                                        </div>*@
+                                                <a data-big-image="~/Content/img/view-slider/medium/polo-shirt-1.png" data-lens-image="~/Content/img/view-slider/large/polo-shirt-1.png" class="simpleLens-thumbnail-wrapper" href="#">
+                                                    <img src="~/Content/img/view-slider/thumbnail/polo-shirt-1.png">
+                                                </a>
+                                                <a data-big-image="~/Content/img/view-slider/medium/polo-shirt-3.png" data-lens-image="~/Content/img/view-slider/large/polo-shirt-3.png" class="simpleLens-thumbnail-wrapper" href="#">
+                                                    <img src="~/Content/img/view-slider/thumbnail/polo-shirt-3.png">
+                                                </a>
+                                                <a data-big-image="~/Content/img/view-slider/medium/polo-shirt-4.png" data-lens-image="~/Content/img/view-slider/large/polo-shirt-4.png" class="simpleLens-thumbnail-wrapper" href="#">
+                                                    <img src="~/Content/img/view-slider/thumbnail/polo-shirt-4.png">
+                                                </a>
+                                            </div>*@
                                     </div>
                                 </div>
                             </div>
                             <!-- Modal view content -->
                             <div class="col-md-7 col-sm-7 col-xs-12">
-                                <div class="aa-product-view-content">
-                                    <h3>@ViewBag.ProductDetail.Category_Name</h3>
-                                    <div class="aa-price-block">
-                                        Giá : <span class="aa-product-view-price">@ViewBag.ProductDetail.Price</span> VND
-                                        @*<p class="aa-product-avilability">Avilability: <span>In stock</span></p>*@
-                                    </div>
-                                    <p></p>
-                                    <h4>Kích cỡ</h4>
-                                    <div class="aa-prod-view-size">
-                                        <a href="#">S</a>
-                                        <a href="#">M</a>
-                                        <a href="#">L</a>
-                                        <a href="#">XL</a>
-                                    </div>
-                                    <h4>Màu</h4>
-                                    <div class="aa-color-tag">
-                                        <a href="#" class="aa-color-green"></a>
-                                        <a href="#" class="aa-color-yellow"></a>
-                                        <a href="#" class="aa-color-pink"></a>
-                                        <a href="#" class="aa-color-black"></a>
-                                        <a href="#" class="aa-color-white"></a>
-                                    </div>
-                                    <h4>Số lượng</h4>
-                                    <div class="aa-prod-quantity">
-                                        <form action="">
-                                            <select id="" name="">
-                                                <option selected="1" value="0">1</option>
-                                                <option value="1">2</option>
-                                                <option value="2">3</option>
-                                                <option value="3">4</option>
-                                                <option value="4">5</option>
-                                                <option value="5">6</option>
+                                <form action="@Url.Action("AddCart","Cart")" method="post">
+                                    <div class="aa-product-view-content">
+                                        <h3>@ViewBag.ProductDetail.Category_Name</h3>
+
+                                        <input type="hidden" name="productId" value="@Model.id" />
+
+                                        <div class="aa-price-block">
+                                            Giá : <span class="aa-product-view-price">@ViewBag.ProductDetail.Price</span> VND
+                                            @*<p class="aa-product-avilability">Avilability: <span>In stock</span></p>*@
+                                        </div>
+                                        <p></p>
+                                        <h4>Kích cỡ</h4>
+                                        <div class="aa-prod-view-size">
+                                            <a href="#">S</a>
+                                            <a href="#">M</a>
+                                            <a href="#">L</a>
+                                            <a href="#">XL</a>
+                                        </div>
+                                        <h4>Màu</h4>
+                                        <div class="aa-color-tag">
+                                            <a href="#" class="aa-color-green"></a>
+                                            <a href="#" class="aa-color-yellow"></a>
+                                            <a href="#" class="aa-color-pink"></a>
+                                            <a href="#" class="aa-color-black"></a>
+                                            <a href="#" class="aa-color-white"></a>
+                                        </div>
+                                        <h4>Số lượng</h4>
+                                        <div class="aa-prod-quantity">
+                                            <select id="" name="quantity">
+                                                <option selected value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                                <option value="6">6</option>
                                             </select>
-                                        </form>
-                                        <p class="aa-prod-category">
-                                            Danh mục: <a href="#">@ViewBag.ProductDetail.Category_Name</a>
-                                        </p>
+                                            <p class="aa-prod-category">
+                                                Danh mục: <a href="#">@ViewBag.ProductDetail.Category_Name</a>
+                                            </p>
+                                        </div>
+                                        <div class="aa-prod-view-bottom">
+                                            <button class="aa-add-to-cart-btn" type="submit">Thêm vào giỏ hàng</button>
+                                            <a class="aa-add-to-cart-btn" href="#">Yêu thích</a>
+                                            @*<a class="aa-add-to-cart-btn" href="#">Compare</a>*@
+                                        </div>
                                     </div>
-                                    <div class="aa-prod-view-bottom">
-                                        <a class="aa-add-to-cart-btn" href="#">Thêm vào giỏ hàng</a>
-                                        <a class="aa-add-to-cart-btn" href="#">Yêu thích</a>
-                                        @*<a class="aa-add-to-cart-btn" href="#">Compare</a>*@
-                                    </div>
-                                </div>
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -119,76 +125,76 @@
                             <div class="tab-pane fade " id="review">
                                 @*<iframe src="http://www.facebook.com/plugins/comments.php?href=http://techcrunch.com/2014/09/17/life-is-tough/" scrolling="no" frameborder="0" style="border:none; overflow:hidden; width:100%; height:3806px;" allowTransparency="true"></iframe>*@
                                 <!--<div class="aa-product-review-area">
-        <h4>2 Reviews for T-Shirt</h4>
-        <ul class="aa-review-nav">
-            <li>
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" src="~/Content/img/testimonial-img-3.jpg" alt="girl image">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
-                        <div class="aa-product-rating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star-o"></span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-            </li>
-            <li>
-                <div class="media">
-                    <div class="media-left">
-                        <a href="#">
-                            <img class="media-object" src="~/Content/img/testimonial-img-3.jpg" alt="girl image">
-                        </a>
-                    </div>
-                    <div class="media-body">
-                        <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
-                        <div class="aa-product-rating">
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star"></span>
-                            <span class="fa fa-star-o"></span>
-                        </div>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <h4>Add a review</h4>
-        <div class="aa-your-rating">
-            <p>Your Rating</p>
-            <a href="#"><span class="fa fa-star-o"></span></a>
-            <a href="#"><span class="fa fa-star-o"></span></a>
-            <a href="#"><span class="fa fa-star-o"></span></a>
-            <a href="#"><span class="fa fa-star-o"></span></a>
-            <a href="#"><span class="fa fa-star-o"></span></a>
-        </div>-->
+                                <h4>2 Reviews for T-Shirt</h4>
+                                <ul class="aa-review-nav">
+                                    <li>
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object" src="~/Content/img/testimonial-img-3.jpg" alt="girl image">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
+                                                <div class="aa-product-rating">
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star-o"></span>
+                                                </div>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="media">
+                                            <div class="media-left">
+                                                <a href="#">
+                                                    <img class="media-object" src="~/Content/img/testimonial-img-3.jpg" alt="girl image">
+                                                </a>
+                                            </div>
+                                            <div class="media-body">
+                                                <h4 class="media-heading"><strong>Marla Jobs</strong> - <span>March 26, 2016</span></h4>
+                                                <div class="aa-product-rating">
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star"></span>
+                                                    <span class="fa fa-star-o"></span>
+                                                </div>
+                                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                                <h4>Add a review</h4>
+                                <div class="aa-your-rating">
+                                    <p>Your Rating</p>
+                                    <a href="#"><span class="fa fa-star-o"></span></a>
+                                    <a href="#"><span class="fa fa-star-o"></span></a>
+                                    <a href="#"><span class="fa fa-star-o"></span></a>
+                                    <a href="#"><span class="fa fa-star-o"></span></a>
+                                    <a href="#"><span class="fa fa-star-o"></span></a>
+                                </div>-->
                                 <!-- review form -->
                                 <!--<form action="" class="aa-review-form">
-            <div class="form-group">
-                <label for="message">Your Review</label>
-                <textarea class="form-control" rows="3" id="message"></textarea>
-            </div>
-            <div class="form-group">
-                <label for="name">Name</label>
-                <input type="text" class="form-control" id="name" placeholder="Name">
-            </div>
-            <div class="form-group">
-                <label for="email">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
-            </div>
+                                        <div class="form-group">
+                                            <label for="message">Your Review</label>
+                                            <textarea class="form-control" rows="3" id="message"></textarea>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Name</label>
+                                            <input type="text" class="form-control" id="name" placeholder="Name">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" id="email" placeholder="example@gmail.com">
+                                        </div>
 
-            <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
-        </form>
-    </div>-->
+                                        <button type="submit" class="btn btn-default aa-review-submit">Submit</button>
+                                    </form>
+                                </div>-->
                             </div>
                         </div>
                     </div>
@@ -199,25 +205,25 @@
                             <!-- start single product item -->
                             @foreach (var item in ViewBag.ProductRelated)
                             {
-                            <li>
-                                <figure>
-                                    <a class="aa-product-img" href="/ProductDetail/Index?ID=@item.ID&Category_ID=@item.Category_ID"><img src="@item.ImgUrl" alt="polo shirt img"></a>
-                                    <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
-                                    <figcaption>
-                                        <h4 class="aa-product-title"><a href="#">@item.Name</a></h4>
-                                        <span class="aa-product-price">@item.Price</span><span class="aa-product-price">@*<del>$65.50</del>*@</span>
-                                    </figcaption>
-                                </figure>
-                                <div class="aa-product-hvr-content">
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
-                                    <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
-                                    <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
-                                </div>
-                                <!-- product badge -->
-                                <span class="aa-badge aa-sale" href="#">SALE!</span>
-                            </li>
+                                <li>
+                                    <figure>
+                                        <a class="aa-product-img" href="/ProductDetail/Index?ID=@item.ID&Category_ID=@item.Category_ID"><img src="@item.ImgUrl" alt="polo shirt img"></a>
+                                        <a class="aa-add-card-btn" href="#"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
+                                        <figcaption>
+                                            <h4 class="aa-product-title"><a href="#">@item.Name</a></h4>
+                                            <span class="aa-product-price">@item.Price</span><span class="aa-product-price">@*<del>$65.50</del>*@</span>
+                                        </figcaption>
+                                    </figure>
+                                    <div class="aa-product-hvr-content">
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Add to Wishlist"><span class="fa fa-heart-o"></span></a>
+                                        <a href="#" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
+                                        <a href="#" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
+                                    </div>
+                                    <!-- product badge -->
+                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                </li>
                             }
-                            
+
                         </ul>
                         <!-- quick view modal -->
                         <div class="modal fade" id="quick-view-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">

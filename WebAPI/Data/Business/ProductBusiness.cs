@@ -82,16 +82,8 @@ namespace Data.Business
         {
             try
             {
-                //var list = cnn.products.Where(p => p.is_active.Equals(SystemParam.ACTIVE)).Count();
-                //if (list > 0)
-                //{
-                //    return SystemParam.EXISTING;
-                //}
-                var q = cnn.products.Select(u => u);
                 product item = new product();
                 item.product_category_id = CategoryID;
-                //item.code = Code;
-                item.id = q.Count();
                 item.product_name = Name;
                 item.price_start = Convert.ToInt32((Price).ToString().Replace(",", ""));
                 item.image_url = ImageUrl;
