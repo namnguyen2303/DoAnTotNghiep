@@ -21,12 +21,12 @@ namespace Data.Business
         public UserDetailOutputModel CheckLoginWeb(string phone, string password)
         {
             UserDetailOutputModel query = new UserDetailOutputModel();
-            var passUser = cnn.users.Where(u => u.is_active == SystemParam.ACTIVE && u.phone == phone ).FirstOrDefault();
+            var passUser = cnn.users.Where(u => u.is_active == SystemParam.ACTIVE && u.phone == phone).FirstOrDefault();
             if (passUser == null)
                 return query;
             if (Util.CheckPass(password, passUser.pass))
             {
-                query = cnn.users.Where(u => u.is_active == SystemParam.ACTIVE && u.phone == phone).Select(u => new UserDetailOutputModel { UserID = u.id, UserName = u.username, Role = u.role, Phone = u.phone }).FirstOrDefault();
+                query = cnn.users.Where(u => u.is_active == SystemParam.ACTIVE && u.phone == phone).Select(u => new UserDetailOutputModel { UserID = u.id, UserName = u.username, Phone = u.phone }).FirstOrDefault();
             }
             else
             {
@@ -34,7 +34,7 @@ namespace Data.Business
             }
             return query;
         }
-       
+
         //public UserDetailOutputModel CheckLoginWeb(string phone, string password)
         //{
         //    UserDetailOutputModel query = new UserDetailOutputModel();

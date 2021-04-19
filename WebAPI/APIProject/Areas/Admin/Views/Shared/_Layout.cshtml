@@ -46,32 +46,7 @@
             <div class="tab-content p-l-0 p-r-0 bg-white">
                 <div class="tab-pane active">
                     <nav class="sidebar-nav">
-                        <ul class="main-menu metismenu">
-                            <li id="tabHome">
-                                <a href="/Admin/Home/Index"><i class="fa fa-tachometer ic-menu"></i>Tổng quan</a>
-                            </li>
-                            <li id="tabSlide">
-                                <a href="/Admin/Slide/Index"><i class="fa fa-sliders ic-menu"></i>Slide</a>
-                            </li>
-                            <li id="tabCustomer">
-                                <a href="/Admin/Customer/Index"><i class="fa fa-users ic-menu"></i>Khách hàng</a>
-                            </li>
-                            <li id="tabCategory">
-                                <a href="/Admin/Category/Index"><i class="fa fa-th-list ic-menu"></i>Danh mục</a>
-                            </li>
-                            <li id="tabProduct">
-                                <a href="/Admin/Product/Index"><i class="fa fa-product-hunt ic-menu"></i>Sản phẩm</a>
-                            </li>
-                            <li id="tabOrder">
-                                <a href="/Admin/Order/Index"><i class="fa fa-shopping-basket ic-menu"></i>Đơn hàng <small><span class="sec counter counter-lg text-white badge badge-pill m-0 p-1" style="background-color:darkorange; color: rgb(231,211,90);" id="all-noti"></span></small></a>
-                            </li>
-                            <li id="tabNews">
-                                <a href="/Admin/News/Index"><i class="fa fa-newspaper-o ic-menu"></i>Bài viết</a>
-                            </li>
-                            <li id="tabUser" style="margin-bottom:80px;">
-                                <a href="/Admin/User/Index"><i class="fa fa-user-secret ic-menu"></i>Tài khoản</a>
-                            </li>
-                        </ul>
+                        @Html.Action("MenuLeftParitalView", "Home")
                     </nav>
                 </div>
             </div>
@@ -82,6 +57,8 @@
             @RenderBody()
         </div>
     </div>
+
+    @RenderSection("scripts", false)
 </body>
 </html>
 

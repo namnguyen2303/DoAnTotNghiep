@@ -95,57 +95,46 @@
     <Compile Include="Business\ProductBusiness.cs" />
     <Compile Include="Business\SlideBusiness.cs" />
     <Compile Include="Business\UserBusiness.cs" />
-    <Compile Include="DB\cart.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="DB\cart.cs" />
+    <Compile Include="DB\cartDetail.cs" />
+    <Compile Include="DB\category.cs" />
+    <Compile Include="DB\color.cs" />
+    <Compile Include="DB\customer.cs" />
+    <Compile Include="DB\customerType.cs" />
+    <Compile Include="DB\news.cs" />
+    <Compile Include="DB\order.cs" />
+    <Compile Include="DB\orderDetail.cs" />
+    <Compile Include="DB\payment.cs" />
+    <Compile Include="DB\product.cs" />
+    <Compile Include="DB\product_categories.cs" />
+    <Compile Include="DB\rating.cs" />
+    <Compile Include="DB\role.cs" />
+    <Compile Include="DB\sale.cs" />
+    <Compile Include="DB\slide.cs" />
+    <Compile Include="DB\TranDungShopEntities.cs" />
+    <Compile Include="DB\user.cs" />
+    <Compile Include="DB\userRole.cs" />
+    <Compile Include="Migrations\202104151732167_initialCreate.cs" />
+    <Compile Include="Migrations\202104151732167_initialCreate.Designer.cs">
+      <DependentUpon>202104151732167_initialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\cart_detail.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Migrations\202104151737470_editCustomer.cs" />
+    <Compile Include="Migrations\202104151737470_editCustomer.Designer.cs">
+      <DependentUpon>202104151737470_editCustomer.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\categories.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Migrations\202104170922009_addTablepayment.cs" />
+    <Compile Include="Migrations\202104170922009_addTablepayment.Designer.cs">
+      <DependentUpon>202104170922009_addTablepayment.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\colors.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Migrations\202104171604564_updatedatabase.cs" />
+    <Compile Include="Migrations\202104171604564_updatedatabase.Designer.cs">
+      <DependentUpon>202104171604564_updatedatabase.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\customers.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
+    <Compile Include="Migrations\202104171629295_editUser.cs" />
+    <Compile Include="Migrations\202104171629295_editUser.Designer.cs">
+      <DependentUpon>202104171629295_editUser.cs</DependentUpon>
     </Compile>
-    <Compile Include="DB\Model1.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\Model1.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\Model1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </Compile>
-    <Compile Include="DB\news.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\orders.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\order_detail.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\products.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\product_categories.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\slides.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DB\users.cs">
-      <DependentUpon>Model1.tt</DependentUpon>
-    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\CategoryModel.cs" />
     <Compile Include="Model\ListCategoryOutputModel.cs" />
     <Compile Include="Model\ListCategoryPostOutputModel.cs" />
@@ -164,30 +153,24 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\.editorconfig">
-      <Link>.editorconfig</Link>
-    </None>
-    <None Include="App.Config" />
-    <EntityDeploy Include="DB\Model1.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model1.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="DB\Model1.edmx.diagram">
-      <DependentUpon>Model1.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DB\Model1.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="DB\Model1.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>Model1.edmx</DependentUpon>
-      <LastGenOutput>Model1.cs</LastGenOutput>
-    </Content>
+    <EmbeddedResource Include="Migrations\202104151732167_initialCreate.resx">
+      <DependentUpon>202104151732167_initialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104151737470_editCustomer.resx">
+      <DependentUpon>202104151737470_editCustomer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104170922009_addTablepayment.resx">
+      <DependentUpon>202104170922009_addTablepayment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171604564_updatedatabase.resx">
+      <DependentUpon>202104171604564_updatedatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104171629295_editUser.resx">
+      <DependentUpon>202104171629295_editUser.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

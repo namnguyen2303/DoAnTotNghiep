@@ -1,4 +1,4 @@
-﻿
+﻿@model string
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -10,35 +10,42 @@
 <!-- Cart view section -->
 <section id="aa-myaccount">
     <div class="container">
+        @if (Model != null)
+        {
+            <p class="alert alert-danger">
+                @Model
+            </p>
+        }
         <div class="row">
             <div class="col-md-12">
                 <div class="aa-myaccount-area">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="aa-myaccount-login">
-                                <h4>Đăng nhập</h4>
-                                <form action="" class="aa-login-form">
-                                    <label for="">Email<span>*</span></label>
-                                    <input type="text" placeholder="">
-                                    <label for="">Mật khẩu<span>*</span></label>
-                                    <input type="password" placeholder="">
-                                    <button type="submit" class="aa-browse-btn">Đăng nhập</button>
-                                    <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Lưu đăng nhập </label>
-                                    <p class="aa-lost-password"><a href="#">Quên mật khẩu?</a></p>
-                                </form>
-                            </div>
+                            @*<div class="aa-myaccount-login">
+                                    <h4>Đăng nhập</h4>
+                                    <form action="" class="aa-login-form">
+                                        <label for="">Email<span>*</span></label>
+                                        <input type="text" placeholder="">
+                                        <label for="">Mật khẩu<span>*</span></label>
+                                        <input type="password" placeholder="">
+                                        <button type="submit" class="aa-browse-btn">Đăng nhập</button>
+                                        <label class="rememberme" for="rememberme"><input type="checkbox" id="rememberme"> Lưu đăng nhập </label>
+                                        <p class="aa-lost-password"><a href="#">Quên mật khẩu?</a></p>
+                                    </form>
+                                </div>*@
                         </div>
                         <div class="col-md-6">
-                            <div class="aa-myaccount-register">
-                                <h4>Đăng ký</h4>
-                                <form action="" class="aa-login-form">
-                                    <label for="">Email<span>*</span></label>
-                                    <input type="text" placeholder="">
-                                    <label for="">Mật khẩu<span>*</span></label>
-                                    <input type="password" placeholder="">
-                                    <button type="submit" class="aa-browse-btn">Đăng ký</button>
-                                </form>
-                            </div>
+                            @*<div class="aa-myaccount-register">
+                                    <h4>Đăng ký</h4>
+                                    <form action="" class="aa-login-form">
+                                        <label for="">Email<span>*</span></label>
+                                        <input type="text" placeholder="">
+                                        <label for="">Mật khẩu<span>*</span></label>
+                                        <input type="password" placeholder="">
+                                        <button type="submit" class="aa-browse-btn">Đăng ký</button>
+                                    </form>
+                                </div>*@
+                            @Html.Partial("Register")
                         </div>
                     </div>
                 </div>
@@ -46,4 +53,3 @@
         </div>
     </div>
 </section><!-- Cart view section -->
-

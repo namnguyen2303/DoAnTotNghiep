@@ -28,7 +28,7 @@ namespace APIProject.Controllers
             ViewBag.SpNamHot = productBusiness.getSpNamHot();
             ViewBag.SpHot = productBusiness.getSpHot();
 
-            
+
             return View();
         }
     }

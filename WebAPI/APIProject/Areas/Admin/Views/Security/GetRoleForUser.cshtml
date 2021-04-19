@@ -1,0 +1,70 @@
+﻿@using Data.DB;
+@model user
+
+@{
+    ViewBag.Title = "GetRoleForUser";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var roles = ViewBag.Roles as IEnumerable<role>;
+}
+
+
+<link href="~/Content/chosen.css" rel="stylesheet" />
+<div class="container-fluid">
+    @using (Html.BeginForm())
+    {
+        <h2>
+            Phân quyền người dùng
+        </h2>
+        <p>
+            Số điện thoại: <strong>@Model.phone</strong>
+        </p>
+        <input type="hidden" name="id" value="@Model.id" />
+        <input type="hidden" name="email" value="@Model.username" />
+
+        <div class="form-group row">
+            <label class="col-form-label col-md-1">Quyền</label>
+            <div class="col-md-8">
+                <select name="RoleIds" multiple class="form-control chzn-select">
+                    @foreach (var item in roles)
+                    {
+                        if (Model.userRoles.Count() > 0)
+                        {
+                            if (Model.userRoles.SingleOrDefault(x => x.roleId == item.id) != null)
+                            {
+                                <option selected value="@item.id">
+                                    @item.name
+                                </option>
+                            }
+                            else
+                            {
+                                <option value="@item.id">
+                                    @item.name
+                                </option>
+                            }
+                        }
+                        else
+                        {
+                            <option value="@item.id">
+                                @item.name
+                            </option>
+                        }
+                    }
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <button type="submit" class="btn btn-outline-secondary">
+                Lưu quyền
+            </button>
+        </div>
+    }
+
+</div>
+
+@section scripts{
+    <script src="~/Scripts/chosen.jquery.min.js"></script>
+    <script>
+        $(".chzn-select").chosen();
+    </script>
+
+}

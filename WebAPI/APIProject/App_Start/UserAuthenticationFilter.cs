@@ -14,19 +14,19 @@ namespace APIProject.App_Start
     {
         public void OnAuthentication(AuthenticationContext filterContext)
         {
-            if (filterContext.HttpContext.Session[Data.Utils.Sessions.LOGIN] != null)
-            {
-                string ControllerName = filterContext.Controller.ToString();
-                UserDetailOutputModel userLogin = (UserDetailOutputModel)filterContext.HttpContext.Session["Login"];
-            }
-            else
-            {
-                //Chuyen ve trang dang nhap
-                var routeValues = new RouteValueDictionary();
-                routeValues["controller"] = "Home";
-                routeValues["action"] = "Login";
-                filterContext.Result = new RedirectToRouteResult(routeValues);
-            }
+            //if (filterContext.HttpContext.Session[Data.Utils.Sessions.LOGIN] != null)
+            //{
+            //    string ControllerName = filterContext.Controller.ToString();
+            //    UserDetailOutputModel userLogin = (UserDetailOutputModel)filterContext.HttpContext.Session["Login"];
+            //}
+            //else
+            //{
+            //    //Chuyen ve trang dang nhap
+            //    var routeValues = new RouteValueDictionary();
+            //    routeValues["controller"] = "Home";
+            //    routeValues["action"] = "Login";
+            //    filterContext.Result = new RedirectToRouteResult(routeValues);
+            //}
         }
 
         //Runs after the OnAuthentication method  

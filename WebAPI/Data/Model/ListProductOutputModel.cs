@@ -18,7 +18,7 @@ namespace Data.Model
         public string Name { set; get; }
         public string Category_Name { set; get; }
         //public float? Price { set; get; }
-        public Nullable<double> Price { set; get; }
+        public Nullable<decimal> Price { set; get; }
         public string ImgUrl { set; get; }
         public string Content { set; get; }
         public string Description { set; get; }

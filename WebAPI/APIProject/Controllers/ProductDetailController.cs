@@ -8,17 +8,30 @@ using Data.Business;
 using Data.Utils;
 using APIProject.App_Start;
 using Newtonsoft.Json;
+using Data.DB;
 
 namespace APIProject.Controllers
 {
     public class ProductDetailController : BaseController
     {
+        TranDungShopEntities _db = new TranDungShopEntities();
+
         // GET: ProductDetail
-        public ActionResult Index(int ID, int Category_ID)
+        public ActionResult Index(int ID, int? Category_ID)
         {
+            var item = _db.products.Find(ID);
             ViewBag.ProductDetail = productBusiness.ProductDetail(ID);
-            ViewBag.ProductRelated = productBusiness.ProductRelated(Category_ID);
-            return View();
+            if (Category_ID != null)
+            {
+                ViewBag.ProductRelated = productBusiness.ProductRelated(Category_ID.Value);
+            }
+            else
+            {
+                ViewBag.ProductRelated = productBusiness.ProductRelated(item.product_category_id);
+            }
+            return View(item);
         }
+
+
     }
 }

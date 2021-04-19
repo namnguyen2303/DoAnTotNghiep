@@ -8,16 +8,26 @@ using PagedList;
 using System.Web.Mvc;
 using Data.Utils;
 using APIProject.Controllers;
+using Data.DB;
+using System.Web.Security;
 
 namespace APIProject.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin, member")]
     public class ProductController : BaseController
     {
+        TranDungShopEntities _db = new TranDungShopEntities();
         // GET: Admin/Product
         [UserAuthenticationFilter]
         public ActionResult Index()
         {
+            var user = GetUserNameFromCookie();
+            if (user != null)
+            {
+
+            }
             ViewBag.Category = productBusiness.ListCategory();
+
             return View();
         }
 
@@ -45,6 +55,10 @@ namespace APIProject.Areas.Admin.Controllers
         {
             try
             {
+                if (ImageUrl == null)
+                {
+                    ImageUrl = "test";
+                }
                 return productBusiness.CreateProduct(CategoryID, /*Code,*/ Name, Price, ImageUrl, Note, Description, New, Sale, Hot);
             }
             catch (Exception ex)
@@ -89,6 +103,24 @@ namespace APIProject.Areas.Admin.Controllers
             {
                 ex.ToString();
                 return SystemParam.ERROR;
+            }
+        }
+
+        user GetUserNameFromCookie()
+        {
+            try
+            {
+                string cookieName = FormsAuthentication.FormsCookieName; //Find cookie name
+                HttpCookie authCookie = HttpContext.Request.Cookies[cookieName]; //Get the cookie by it's name
+                if (authCookie == null) return null;
+                FormsAuthenticationTicket ticket = FormsAuthentication.Decrypt(authCookie.Value); //Decrypt it
+                string username = ticket.Name; //You have the UserName!
+                var customer = _db.users.FirstOrDefault(x => x.username == username);
+                return customer;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
             }
         }
     }

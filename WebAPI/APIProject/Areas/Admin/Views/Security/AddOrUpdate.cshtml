@@ -1,0 +1,108 @@
+﻿@using APIProject.Areas.Admin.Models;
+@using Data.DB;
+@model user
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+@using (Html.BeginForm())
+{
+
+    if (Model != null)
+    {
+        <input type="hidden" name="id" value="@Model.id" id="id" />
+    }
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">
+            <i class="fa fa-user-secret" aria-hidden="false"></i>
+            @if (Model != null)
+            {
+                <span>Cập nhật thông tin tài khoản</span>
+            }
+            else
+            {
+                <span>
+                    Thêm mới tài khoản
+                </span>
+            }
+        </h5>
+    </div>
+    <div class="modal-body">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row mt-3">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Số điện thoại</label>
+                @Html.EditorFor(model => model.phone, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Tài khoản</label>*
+                @Html.EditorFor(model => model.username, new { htmlAttributes = new { @class = "form-control" } })
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col-md-12 col-sm-12 col-12">
+                <label>Mật khẩu</label>*
+                <div class="input-group" id="show_hide_password">
+                    <input class="form-control" name="pass" onkeydown="return event.keyCode == 32 ? false:true" type="password" id="txtPassCreateUser" />
+                    <div class="input-group-addon">
+                        <a href=""><i class="fa fa-eye-slash btn btn-secondary" aria-hidden="true" style="font-size:24px"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="submit" class="btn btn-primary px-3">
+            @if (Model != null)
+            {
+                <span> Cập nhật</span>
+            }
+            else
+            {
+                <span>Thêm mới</span>
+            }
+        </button>
+    </div>
+
+}
+<script>
+    $("#txtPhoneUser, #txtFromDateUser, #txtToDateUser").keypress(function (e) {
+        if (e.keyCode == 13) {
+            searchUser();
+        }
+    });
+    $(document).ready(function () {
+        $("#show_hide_password a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#show_hide_password input').attr("type") == "text") {
+                $('#show_hide_password input').attr('type', 'password');
+                $('#show_hide_password i').addClass("fa-eye-slash");
+                $('#show_hide_password i').removeClass("fa-eye");
+            } else if ($('#show_hide_password input').attr("type") == "password") {
+                $('#show_hide_password input').attr('type', 'text');
+                $('#show_hide_password i').removeClass("fa-eye-slash");
+                $('#show_hide_password i').addClass("fa-eye");
+            }
+        });
+
+        $("#confirmPassword a").on('click', function (event) {
+            event.preventDefault();
+            if ($('#confirmPassword input').attr("type") == "text") {
+                $('#confirmPassword input').attr('type', 'password');
+                $('#confirmPassword i').addClass("fa-eye-slash");
+                $('#confirmPassword i').removeClass("fa-eye");
+            } else if ($('#confirmPassword input').attr("type") == "password") {
+                $('#confirmPassword input').attr('type', 'text');
+                $('#confirmPassword i').removeClass("fa-eye-slash");
+                $('#confirmPassword i').addClass("fa-eye");
+            }
+        });
+    });
+</script>

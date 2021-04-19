@@ -17,7 +17,7 @@ namespace Data.Business
         public UserBusiness(TranDungShopEntities context = null) : base()
         {
         }
-        
+
         public List<ListCustomerOutputModel> Search(string Phone, string FromDate, string ToDate)
         {
             try
@@ -26,7 +26,7 @@ namespace Data.Business
                 DateTime? td = Util.ConvertDate(ToDate);
 
                 List<ListCustomerOutputModel> list = (from u in cnn.users
-                                                      where u.is_active.Equals(SystemParam.ACTIVE) && u.role == SystemParam.ROLE_ADMIN
+                                                      where u.is_active.Equals(SystemParam.ACTIVE)
                                                       && (!String.IsNullOrEmpty(Phone) ? u.username.ToLower().Contains(Phone.ToLower()) || u.phone.ToLower().Contains(Phone.ToLower()) : true)
                                                       && (fd.HasValue ? u.created_at >= fd.Value : true)
                                                       && (td.HasValue ? u.created_at <= td.Value : true)
@@ -51,7 +51,7 @@ namespace Data.Business
         {
             try
             {
-                users u = cnn.users.Find(ID);
+                user u = cnn.users.Find(ID);
                 u.pass = Util.GenPass(SystemParam.RESET_PASSWORD);
                 cnn.SaveChanges();
                 return SystemParam.SUCCESS;
@@ -73,7 +73,7 @@ namespace Data.Business
                     return SystemParam.WRONG_PASSWORD;
                 }
 
-                users users = cnn.users.Find(ID);
+                user users = cnn.users.Find(ID);
                 users.pass = Util.GenPass(NewPassword);
                 cnn.SaveChanges();
                 return SystemParam.SUCCESS;
@@ -95,14 +95,12 @@ namespace Data.Business
                     return SystemParam.EXISTING;
                 }
                 //query lấy ra count của bảng user để gán id cho user mới
-                var query = cnn.users.Select(u => u);
 
-                users user = new users();
-                user.id = query.Count();
+                user user = new user();
                 user.phone = Phone;
                 user.pass = Util.GenPass(usersPass);
                 user.username = usersName;
-                user.role = 1;
+
                 user.is_active = SystemParam.ACTIVE;
                 user.created_at = DateTime.Now;
                 cnn.users.Add(user);
@@ -120,7 +118,7 @@ namespace Data.Business
         {
             try
             {
-                users users = cnn.users.Find(ID);
+                user users = cnn.users.Find(ID);
                 users.is_active = SystemParam.ACTIVE_FALSE;
                 cnn.SaveChanges();
                 return SystemParam.SUCCESS;

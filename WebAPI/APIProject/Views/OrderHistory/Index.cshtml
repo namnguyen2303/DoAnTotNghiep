@@ -1,0 +1,115 @@
+﻿@using Data.DB;
+@using Data.Utils;
+@model IEnumerable<order>
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<section id="aa-catg-head-banner">
+    <img src="~/Content/img/fashion/321.jpg" alt="fashion img">
+    <div class="aa-catg-head-banner-area">
+        <div class="container">
+            <div class="aa-catg-head-banner-content">
+                <h2>Cart Page</h2>
+                <ol class="breadcrumb">
+                    <li><a href="index.html">Trang chủ</a></li>
+                    <li class="active">Giỏ hàng</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="aa-catg-head-banner">
+    <h2 style="text-align:center;padding-top:15px;">Lịch sử mua hàng</h2>
+    <hr style="width:300px;" />
+</section>
+
+<section>
+    <div class="container">
+        <div>
+            <h2>
+                Danh Sách hóa đơn
+            </h2>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th>Ngày tạo</th>
+                        <th>
+                            Người mua
+                        </th>
+                        <th>
+                            Trạng thái
+                        </th>
+                        <th>
+                            Số lượn sản phẩm
+                        </th>
+                        <th>
+                            Tổng tiền
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @if (item.created_at != null)
+                                    {
+                                        <span>
+                                            @item.created_at.Value.ToString("dd/MM/yyyy")
+                                        </span>
+                                    }
+                                </td>
+                                <td>
+                                    @item.customer.name_customer
+                                </td>
+                                <td>
+                                    @if (item.status == SystemParam.IS_ORDER)
+                                    {
+                                        <span class=" alert-info">Chờ xử lý</span>
+                                    }
+                                    else
+                                    {
+                                        if (item.status == SystemParam.IS_XU_LY)
+                                        {
+                                            <span class=" alert-success">Đã được xử lý</span>
+                                        }
+                                        else
+                                        {
+                                            <span class=" alert-danger">Đã hủy</span>
+                                        }
+                                    }
+
+                                </td>
+                                <td>
+                                    @item.totalItem
+                                </td>
+                                <td>
+                                    @item.total_price.ToString("#,##") VNĐ
+                                </td>
+                                <td>
+                                    <a class="btn btn-info" href="@Url.Action("OrderDetail", new { id = item.id })">
+                                        Xem chi tiết
+                                    </a>
+                                    @if (item.status == SystemParam.IS_ORDER)
+                                    {
+                                        <a class="btn btn-danger" href="@Url.Action("OrderCancel", new { id = item.id })">
+                                            Hủy đơn hàng
+                                        </a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>

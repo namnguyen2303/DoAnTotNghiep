@@ -11,7 +11,7 @@ namespace APIProject.Controllers
         // GET: News
         public ActionResult Index(int ID)
         {
-            ViewBag.NewsDetail = newsBusiness.NewsDetail(ID);
+            ViewBag.NewsDetail = newsBusiness.Newscontent(ID);
             ViewBag.listTopNews = newsBusiness.GetListTopNews();
             return View();
         }

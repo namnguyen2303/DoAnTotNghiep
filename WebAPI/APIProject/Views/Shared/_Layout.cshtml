@@ -47,13 +47,7 @@
                             </div>
                             <!-- / header top left -->
                             <div class="aa-header-top-right">
-                                <ul class="aa-head-top-nav-right">
-                                    <li><a href="/Account/Index">Tài khoản</a></li>
-                                    <li class="hidden-xs"><a href="/Wishlist/Index">Yêu thích</a></li>
-                                    <li class="hidden-xs"><a href="/Cart/Index">Giỏ hàng của tôi</a></li>
-                                    @*<li class="hidden-xs"><a href="checkout.html">Checkout</a></li>*@
-                                    <li><a href="" data-toggle="modal" data-target="#login-modal">Đăng nhập</a></li>
-                                </ul>
+                                @Html.Action("Menu", "Account")
                             </div>
                         </div>
                     </div>
@@ -80,24 +74,21 @@
                             <!-- / logo  -->
                             <!-- cart box -->
                             <div class="aa-cartbox">
-                                <a class="aa-cart-link" href="#">
-                                    <span class="fa fa-shopping-basket"></span>
-                                    <span class="aa-cart-title">Giỏ hàng</span>
-                                    <span class="aa-cart-notify">2</span>
-                                </a>
-                                <div class="aa-cartbox-summary">
-                                    <ul>
-                                        <li>
-                                            <a class="aa-cartbox-img" href="#"><img src="~/Content/img/woman-small-2.jpg" alt="img"></a>
-                                            <div class="aa-cartbox-info">
-                                                <h4><a href="#">Product Name</a></h4>
-                                                <p>1 x $250</p>
-                                            </div>
-                                            <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
-                                        </li>
-                                    </ul>
-                                    <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
-                                </div>
+                                @Html.Action("CartPartialView", "Cart")
+
+                                @*<div class="aa-cartbox-summary">
+                                        <ul>
+                                            <li>
+                                                <a class="aa-cartbox-img" href="#"><img src="~/Content/img/woman-small-2.jpg" alt="img"></a>
+                                                <div class="aa-cartbox-info">
+                                                    <h4><a href="#">Product Name</a></h4>
+                                                    <p>1 x $250</p>
+                                                </div>
+                                                <a class="aa-remove-product" href="#"><span class="fa fa-times"></span></a>
+                                            </li>
+                                        </ul>
+                                        <a class="aa-cartbox-checkout aa-primary-btn" href="checkout.html">Checkout</a>
+                                    </div>*@
                             </div>
                             <!-- / cart box -->
                             <!-- search box -->
@@ -137,27 +128,36 @@
                             <li>
                                 <a href="">Nam<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    @foreach (var item in ViewBag.Categories1)
+                                    @if (ViewBag.Categories1 != null)
                                     {
-                                        <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                        foreach (var item in ViewBag.Categories1)
+                                        {
+                                            <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                        }
                                     }
                                 </ul>
                             </li>
                             <li>
                                 <a href="#">Nữ<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    @foreach (var item in (IEnumerable<ListCategoryOutputModel>)ViewData["Categories0"])
+                                    @if (ViewData["Categories0"] != null)
                                     {
-                                        <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                        foreach (var item in (IEnumerable<ListCategoryOutputModel>)ViewData["Categories0"])
+                                        {
+                                            <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                        }
                                     }
                                 </ul>
                             </li>
                             <li>
                                 <a href="">Trẻ con <span class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    @foreach (var item in ViewBag.Categories2)
+                                    @if (ViewBag.Categories2 != null)
                                     {
-                                        <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                        foreach (var item in ViewBag.Categories2)
+                                        {
+                                            <li><a href="/ListProductCategory/Index?Page=1&Category=@item.ID">@item.Name</a></li>
+                                        }
                                     }
                                 </ul>
                             </li>

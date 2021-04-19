@@ -11,6 +11,7 @@ using APIProject.Controllers;
 
 namespace APIProject.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin, member")]
     public class SlideController : BaseController
     {
         // GET: Admin/Slide
@@ -34,7 +35,7 @@ namespace APIProject.Areas.Admin.Controllers
         {
             try
             {
-                return slideBusiness.CreateSlide( ImageUrl);
+                return slideBusiness.CreateSlide(ImageUrl);
             }
             catch (Exception ex)
             {

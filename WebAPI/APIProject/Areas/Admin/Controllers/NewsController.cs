@@ -11,6 +11,7 @@ using APIProject.Controllers;
 
 namespace APIProject.Areas.Admin.Controllers
 {
+    [Authorize(Roles = "admin, member")]
     public class NewsController : BaseController
     {
         // GET: Admin/Post

@@ -1,0 +1,96 @@
+﻿@using Data.DB;
+@using PagedList.Mvc;
+@model PagedList.IPagedList<user>
+
+@{
+    ViewBag.Title = "GetAllUser";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var roles = ViewBag.roles as string;
+    var username = ViewBag.username as string;
+}
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-9 text-dark px-0 mt-3">
+                <h4><i class="fa fa-user-secret" aria-hidden="true"></i> Quản lý tài khoản</h4>
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row mb-4 mt-4">
+    <div class="col-md-12 text-right">
+        <a class="btn btn-search btn-success" href="@Url.Action("AddOrUpdate")">
+            <i class="fa fa-fw fa-plus"></i> Thêm mới
+        </a>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Số điện thoại</th>
+            <th>Tài khoản</th>
+            <th>Quyền</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.phone</td>
+                    <td>@item.username</td>
+                    <td>
+                        @if (item.userRoles != null && item.userRoles.Any())
+                        {
+                            foreach (var x in item.userRoles)
+                            {
+                                <span>
+                                    @x.role.name <br />
+                                </span>
+                            }
+                        }
+                    </td>
+                    <td>
+                        @if (item.username == username)
+                        {
+                            <a href="@Url.Action("AddOrUpdate", new { id = item.id })" class="btn btn-primary">
+                                Chỉnh sửa
+                            </a>
+                        }
+                        else
+                        {
+                            if (roles != string.Empty)
+                            {
+                                if (roles.Contains("admin"))
+                                {
+                                    <a href="@Url.Action("GetRoleForUser", new { id = item.id })" class="btn btn-success">
+                                        Phân quyền
+                                    </a>
+                                    <a href="@Url.Action("DeleteUser", new { id = item.id })" class="btn btn-danger">
+                                        Xóa
+                                    </a>
+                                    <a href="@Url.Action("AddOrUpdate", new { id = item.id })" class="btn btn-primary">
+                                        Chỉnh sửa
+                                    </a>
+                                }
+                            }
+                        }
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+@if (Model.PageCount > 1)
+{
+    <div class="text-right">
+        @Html.PagedListPager(Model, page => Url.Action("GetAllUser", new { page }))
+    </div>
+}

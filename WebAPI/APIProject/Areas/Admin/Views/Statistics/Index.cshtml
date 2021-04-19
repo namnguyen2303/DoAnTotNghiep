@@ -1,0 +1,193 @@
+﻿@using APIProject.Areas.Admin.Models;
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+
+    var orderStatictics = ViewBag.order as OrderStatisticsViewModel;
+    var topProduct = ViewBag.topProduct as TopProductViewModel;
+}
+
+<input type="hidden" id="time" value="@orderStatictics.Time" />
+<input type="hidden" id="quantity_order" value="@orderStatictics.TotalItems" />
+<input type="hidden" id="price_order" value="@orderStatictics.TotalPrices" />
+
+<input type="hidden" id="producName" value="@topProduct.ProductName" />
+<input type="hidden" id="quantity_product" value="@topProduct.TotalItems" />
+<input type="hidden" id="price_product" value="@topProduct.TotalPrices" />
+
+<div class="title">
+    <h2 class="bg-primary text-center text-white text-uppercase" style="padding: 1rem 0;">
+        Quản trị hệ thống
+    </h2>
+</div>
+
+
+<div class="container-fluid" style="margin-bottom: 1.5rem">
+    <div class="title">
+        <h2 class="text-uppercase" style="padding: 1rem 0;">
+            Thống kê doanh thu
+        </h2>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8" style="margin-bottom: 1.5rem;margin-left: 1rem ">
+            <div class="text-center">
+                <h2>Doanh thu theo số lượng</h2>
+            </div>
+            <canvas id="canvas_quantity"></canvas>
+        </div>
+        <div class="col-lg-8" style="margin-bottom: 1.5rem;margin-left: 1rem ">
+            <div class="text-center">
+                <h2>Doanh thu theo tiền</h2>
+            </div>
+            <canvas id="canvas_price"></canvas>
+        </div>
+    </div>
+
+
+
+    <div class="title">
+        <h2 class="text-uppercase" style="padding: 1rem 0;" style="margin-bottom: 1.5rem">
+            Thống kê top sản phẩm
+        </h2>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-8" style="margin-bottom: 1.5rem;margin-left: 1rem ">
+            <div class="text-center">
+                <h2>Doanh thu theo số lượng</h2>
+            </div>
+            <canvas id="canvas_quantity_product"></canvas>
+        </div>
+        <div class="col-lg-8" style="margin-bottom: 1.5rem; margin-left: 1rem">
+            <div class="text-center">
+                <h2>Doanh thu theo tiền</h2>
+            </div>
+            <canvas id="canvas_price_product"></canvas>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+    <script src="~/Scripts/chart.js"></script>
+    <script>
+        var canvas_quantity = document.getElementById('canvas_quantity').getContext('2d');
+        var canvas_price = document.getElementById('canvas_price').getContext('2d');
+
+        var time = $("#time").val().split(';');
+        var soLuong = $("#quantity_order").val().split(';');
+        var thanhtien = $("#price_order").val().split(';');
+        console.log(time, soLuong, thanhtien);
+
+        var canvas_quantity = new Chart(canvas_quantity, {
+            type: 'bar',
+            data: {
+                labels: time,
+                datasets: [{
+                    label: 'Số lượng',
+                    data: soLuong,
+                    backgroundColor: [
+                        '#2685D8',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var canvas_price = new Chart(canvas_price, {
+            type: 'bar',
+            data: {
+                labels: time,
+                datasets: [{
+                    label: 'Thành tiền',
+                    data: thanhtien,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+
+        var canvas_quantity = document.getElementById('canvas_quantity_product').getContext('2d');
+        var canvas_price = document.getElementById('canvas_price_product').getContext('2d');
+
+        var time = $("#producName").val().split(';');
+        var soLuong = $("#quantity_product").val().split(';');
+        var thanhtien = $("#price_product").val().split(';');
+        console.log(time, soLuong, thanhtien);
+
+        var canvas_quantity_product = new Chart(canvas_quantity, {
+            type: 'bar',
+            data: {
+                labels: time,
+                datasets: [{
+                    label: 'Số lượng',
+                    data: soLuong,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+
+        var canvas_price_product = new Chart(canvas_price, {
+            type: 'bar',
+            data: {
+                labels: time,
+                datasets: [{
+                    label: 'Thành tiền',
+                    data: thanhtien,
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.2)',
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+}

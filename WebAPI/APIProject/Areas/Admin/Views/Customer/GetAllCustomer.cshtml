@@ -1,0 +1,78 @@
+﻿@using Data.DB;
+@using PagedList.Mvc;
+
+@model PagedList.IPagedList<customer>
+@{
+    ViewBag.Title = "GetAllCustomer";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    var roles = ViewBag.roles as string;
+}
+
+
+<div class="col-md-12">
+    <div class="breadcrumb-holder">
+        <div class="row mb-3 mt-3">
+            <div class="col-md-10 col-sm-9 text-dark px-0 mt-3">
+                <h4><i class="fa fa-user-secret" aria-hidden="true"></i> Quản lý khách hàng</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<table class="table table-striped table-bordered table-hover table-responsive-sm table-responsive-md">
+    <thead class="text-center text-dark bg-thead">
+        <tr>
+            <th>Họ tên</th>
+            <th>Số điện thoại</th>
+            <th>Email</th>
+            <th>Địa chỉ</th>
+            <th>Loại thành viên</th>
+            <th>Chức năng</th>
+        </tr>
+    </thead>
+    <tbody class="text-center">
+        @{
+            if (Model.Count() <= 0)
+            {
+                <tr>
+                    <td colspan="15">Không có dữ liệu.</td>
+                </tr>
+            }
+            else
+            {
+                int stt = ((Model.PageNumber - 1) * Model.PageSize) + 1;
+                foreach (var cus in Model)
+                {
+                    <tr>
+                        <td>@(String.IsNullOrEmpty(cus.name_customer) ? "Chưa cập nhật" : cus.name_customer)</td>
+                        <td>@(String.IsNullOrEmpty(cus.phone) ? "Chưa cập nhật" : cus.phone)</td>
+                        <td>@(String.IsNullOrEmpty(cus.email) ? "Chưa cập nhật" : cus.email)</td>
+                        <td>@(String.IsNullOrEmpty(cus.address_customer) ? "Chưa cập nhật" : cus.address_customer)</td>
+                        <td>
+                            @if (cus.CustomerType != null)
+                            {
+                                <span>
+                                    @cus.CustomerType.name
+                                </span>
+                            }
+                        </td>
+                        <td>
+                            @if (roles != string.Empty)
+                            {
+                                if (roles.Contains("admin"))
+                                {
+                                    <a title="Xóa tài khoản" class="cursor-pointer" onclick="deleteCus(@cus.id)">
+                                        <i class="btnDelete text-danger fa fa-fw fa-trash-o"></i>
+                                    </a>
+                                }
+                            }
+                        </td>
+                    </tr>
+                    stt++;
+                }
+            }
+        }
+    </tbody>
+</table>
+
+
