@@ -51,7 +51,7 @@ namespace APIProject.Areas.Admin.Controllers
 
         [UserAuthenticationFilter]
         [ValidateInput(false)]
-        public int CreateProduct(int CategoryID, /*string Code,*/ string Name, string Price, string ImageUrl, string Note, string Description, int New, int Sale, int Hot)
+        public int CreateProduct(int CategoryID, string Code, string Name, string Price,string PriceSale, string ImageUrl, string Note, string Description, int New, int Sale, int Hot)
         {
             try
             {
@@ -59,7 +59,7 @@ namespace APIProject.Areas.Admin.Controllers
                 {
                     ImageUrl = "test";
                 }
-                return productBusiness.CreateProduct(CategoryID, /*Code,*/ Name, Price, ImageUrl, Note, Description, New, Sale, Hot);
+                return productBusiness.CreateProduct(CategoryID, Code, Name, Price, PriceSale, ImageUrl, Note, Description, New, Sale, Hot);
             }
             catch (Exception ex)
             {
@@ -79,11 +79,11 @@ namespace APIProject.Areas.Admin.Controllers
         [UserAuthenticationFilter]
         [ValidateInput(false)]
         // Lưu lại cập nhật sản phẩm
-        public int SaveEditItem(int ID, /*string Code,*/ string Name, int CategoryID, string ImageUrl, string Note, string Price, string Description, int New, int Sale, int Hot)
+        public int SaveEditItem(int ID, string Code, string Name, int CategoryID, string ImageUrl, string Note, string Price,string PriceSale, string Description, int New, int Sale, int Hot)
         {
             try
             {
-                return productBusiness.SaveEditItem(ID, /*Code,*/ Name, CategoryID, ImageUrl, Note, Price, Description, New, Sale, Hot);
+                return productBusiness.SaveEditItem(ID, Code, Name, CategoryID, ImageUrl, Note, Price, PriceSale, Description, New, Sale, Hot);
             }
             catch (Exception ex)
             {

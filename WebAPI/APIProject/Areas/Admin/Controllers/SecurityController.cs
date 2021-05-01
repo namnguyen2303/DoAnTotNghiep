@@ -35,10 +35,11 @@ namespace APIProject.Areas.Admin.Controllers
         [HttpPost]
         public ActionResult Login(LoginAdminViewModel model)
         {
-            var res = _db.users.SingleOrDefault(x => x.username.ToUpper() == model.username);
+            var res = _db.users.FirstOrDefault(x => x.username.ToUpper() == model.username.ToUpper());
+
             if (res == null)
             {
-                ModelState.AddModelError("", @"Sai tài khoản");
+                ModelState.AddModelError("", @"Tài khoản này không tồn tại!");
                 return View(model);
             }
             if (!HtmlHelpers.VerifyHash(model.pass, "SHA256", res.pass))
@@ -58,7 +59,7 @@ namespace APIProject.Areas.Admin.Controllers
             }
             FormsAuthentication.SignOut();
             SetRoles(model.username, roles);
-            return RedirectToAction("GetAllUser");
+            return RedirectToAction("Index", "Home");
         }
 
         [HttpGet]

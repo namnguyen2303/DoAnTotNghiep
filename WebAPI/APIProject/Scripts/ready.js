@@ -19,7 +19,11 @@ function FocusTabMenu() {
 
     switch (url) {
         case "/Admin/Home/Index":
+        case "/Admin/Home":
             $('#tabHome').addClass('active');
+            break;
+        case "/Admin/Statistics":
+            $('#tabStatics').addClass('active');
             break;
         case "/Admin/Slide/Index":
             $('#tabSlide').addClass('active');
@@ -30,16 +34,16 @@ function FocusTabMenu() {
         case "/Admin/Order/Index":
             $('#tabOrder').addClass('active');
             break;
-        case "/Admin/Customer/Index":
+        case "/Admin/Customer/GetAllCustomer":
             $('#tabCustomer').addClass('active');
             break;
         case "/Admin/Product/Index":
             $('#tabProduct').addClass('active');
             break;
-        case "/Admin/Post/Index":
+        case "/Admin/News/Index":
             $('#tabNews').addClass('active');
             break;
-        case "/Admin/User/Index":
+        case "/Admin/Security/GetAllUser":
             $('#tabUser').addClass('active');
             break;
         default:

@@ -51,8 +51,9 @@
     <Reference Include="BCrypt.Net, Version=0.1.4141.31969, Culture=neutral, PublicKeyToken=f3bc8f8c31beeb49, processorArchitecture=MSIL">
       <HintPath>..\packages\BCrypt.Net.0.1.0\lib\net35\BCrypt.Net.dll</HintPath>
     </Reference>
-    <Reference Include="CKFinder">
-      <HintPath>..\..\..\CKFinder.dll</HintPath>
+    <Reference Include="CKFinder, Version=2.5.0.2768, Culture=neutral, PublicKeyToken=579e7adc719a1423, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\CKFinder.dll</HintPath>
     </Reference>
     <Reference Include="EngineIoClientDotNet, Version=0.9.22.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\EngineIoClientDotNet.0.9.22\lib\net45\EngineIoClientDotNet.dll</HintPath>
@@ -73,7 +74,7 @@
     </Reference>
     <Reference Include="Helpers, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\ViCoGroup\Helpers.dll</HintPath>
+      <HintPath>bin\Helpers.dll</HintPath>
     </Reference>
     <Reference Include="Mail, Version=3.0.19162.1801, Culture=neutral, PublicKeyToken=6dc438ab78a525b3, processorArchitecture=MSIL">
       <HintPath>..\packages\Mail.dll.3.0.19162.1801\lib\net45\Mail.dll</HintPath>
@@ -285,6 +286,7 @@
     <Compile Include="Controllers\OrderHistoryController.cs" />
     <Compile Include="Controllers\ProductDetailController.cs" />
     <Compile Include="Controllers\ReferralCodeController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\WishlistController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1814,6 +1816,7 @@
     <Folder Include="Content\ckfinder\skins\bootstrap\images\icons\16\" />
     <Folder Include="Content\ckfinder\skins\bootstrap\images\icons\32\" />
     <Folder Include="Content\ckfinder\userfiles\" />
+    <Folder Include="Views\Search\" />
     <Folder Include="Views\Security\" />
   </ItemGroup>
   <ItemGroup>

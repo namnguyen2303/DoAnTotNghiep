@@ -910,9 +910,10 @@ function searchProductItem() {
 
 function createProduct() {
     var CategoryID = $('#cbbCategory').val();
-    //var Code = $('#codeCreateProduct').val().trim();
+    var Code = $('#codeCreateProduct').val().trim();
     var Name = $('#nameCreateProduct').val().trim();
     var Price = $('#priceCreateProduct').val().trim();
+    var PriceSale = $('#priceSale').val().trim();
     var Image = $('#_txturlImage').val().trim();
     var Note = $.trim(CKEDITOR.instances['noteCreateProduct'].getData());
     var Description = $('#descriptionCreateProduct').val().trim();
@@ -924,7 +925,11 @@ function createProduct() {
         New = 1;
     }
 
-    if ($('#best_sale_product').is(':checked')) {
+    if (PriceSale != "") {
+        Sale = 1;
+    }
+
+    if ($('#sale_product').is(':checked')) {
         Sale = 1;
     }
 
@@ -941,23 +946,23 @@ function createProduct() {
         return;
     }
 
-    //if (Code.length < 6) {
-    //    swal({
-    //        title: "Thông báo",
-    //        text: "Mã sản phẩm phải dài tối thiểu 6 ký tự!",
-    //        icon: "warning"
-    //    })
-    //    return;
-    //}
+    if (Code.length = 0) {
+        swal({
+            title: "Thông báo",
+            text: "Mã sản phẩm phải không được để trống!",
+            icon: "warning"
+        })
+        return;
+    }
 
-    //if (isSpace(Code)) {
-    //    swal({
-    //        title: "Thông báo",
-    //        text: "Mã sản phẩm không được có khoảng trắng!",
-    //        icon: "warning"
-    //    })
-    //    return;
-    //}
+    if (isSpace(Code)) {
+        swal({
+            title: "Thông báo",
+            text: "Mã sản phẩm không được có khoảng trắng!",
+            icon: "warning"
+        })
+        return;
+    }
 
     if (Name == "" || Price == "" || Image == "" || Note == "" || Description == "") {
         swal({
@@ -976,14 +981,23 @@ function createProduct() {
             })
             return;
         }
+        else if (!isNumeric(PriceSale)) {
+            swal({
+                title: "Thông báo",
+                text: "Giá tiền khuyến mãi chỉ được phép nhập số!",
+                icon: "warning"
+            })
+            return;
+        }
         else {
             $.ajax({
                 url: '/Admin/Product/CreateProduct',
                 data: {
                     CategoryID: CategoryID,
-                    //Code: Code,
+                    Code: Code,
                     Name: Name,
                     Price: Price,
+                    PriceSale: PriceSale,
                     Note: Note,
                     ImageUrl: Image,
                     Description: Description,
@@ -1064,9 +1078,10 @@ function deleteProduct(id) {
 function editItem() {
     var ID = $('#ID').val();
     var CategoryID = $('#cbbCategory_edit').val();
-    //var Code = $('#CodeCreate_edit').val().trim();
+    var Code = $('#CodeCreate_edit').val().trim();
     var Name = $('#NameCreate_edit').val().trim();
     var Price = $('#PriceCreate_edit').val().trim();
+    var PriceSale = $('#priceSaleEdit').val().trim();
     var Description = $('#descriptionEditProduct').val().trim();
     //var Image = $('#tagImage').attr('src');
     var ImageUrl = "";
@@ -1080,6 +1095,10 @@ function editItem() {
     }
 
     if ($('#best_sale_product_edit').is(':checked')) {
+        Sale = 1;
+    }
+
+    if (PriceSale != '') {
         Sale = 1;
     }
 
@@ -1124,12 +1143,13 @@ function editItem() {
         url: '/Admin/Product/SaveEditItem',
         data: {
             ID: ID,
-            //Code: Code,
+            Code: Code,
             Name: Name,
             CategoryID: CategoryID,
             ImageUrl: ImageUrl,
             Note: Note,
             Price: Price,
+            PriceSale: PriceSale,
             Description: Description,
             New: New,
             Sale: Sale,

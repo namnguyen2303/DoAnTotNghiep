@@ -2,17 +2,57 @@
 @model RegisterViewModel
 
 @{
-    Layout = null;
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<div id="aa-myaccount">
+    <div class="container">
+        <div class="aa-myaccount-area">
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3">
+                    <div class="aa-myaccount-login">
+                        <h4 class="">Đăng ký</h4>
+                        @using (Html.BeginForm("Register", "Account",
+                        FormMethod.Post, new { @class = "aa-login-form" }))
+                        {
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            
+                            <label for="">Email<span>*</span></label>
+                            <input type="text" class="inputLogin" placeholder="Email" name="email">
 
-<!DOCTYPE html>
+                            <label for="">Họ tên<span>*</span></label>
+                            <input type="text" class="inputLogin" placeholder="Họ tên" name="name_customer">
+
+                            <label for="">Số điện thoại<span>*</span></label>
+                            <input type="text" class="inputLogin" placeholder="Số điện thoại" name="phone">
+
+                            <label for="">Mật khẩu<span>*</span></label>
+                            <input type="password" class="inputLogin" placeholder="Mật khẩu" name="pass">
+
+                            <label for="">Xác nhận mật khẩu<span>*</span></label>
+                            <input type="password" class="inputLogin" placeholder="Xác nhận mật khẩu" name="confimPass">
+                            
+                            <button class="aa-browse-btn mt-3" id="btnLogin" type="submit">Đăng ký</button>
+                            <label class="rememberme" for="rememberme">
+                                Bạn đã có tài khoản?
+                                <a href="/Account/Login" style="color:#337ab7">Đăng nhập</a>
+                            </label>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!--<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
-    <title class="title-tab">TranDungShop</title>
-    @*<link rel="icon" href="~/Content/images/store_1539333059_242.png" />*@
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
+    <title class="title-tab">TranDungShop</title>-->
+@*<link rel="icon" href="~/Content/images/store_1539333059_242.png" />*@
+<!--<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
     @Styles.Render("~/dekko/css")
     @Scripts.Render("~/layout/js")
     @Scripts.Render("~/dekko/js")
@@ -60,4 +100,4 @@
         </div>
     </div>
 </body>
-</html>
+</html>-->

@@ -27,6 +27,9 @@ namespace APIProject.Areas.Admin.Controllers
         {
             //ViewBag.order = OrderStatistics();
             //ViewBag.topProduct = TopProduct();
+            ViewBag.Post = _db.news.Where(u=>u.is_active == 1).Count();
+            ViewBag.Product = productBusiness.GetListPro();
+            ViewBag.Order = _db.orders.Where(u=>u.status==1).Count();
             return View();
         }
 

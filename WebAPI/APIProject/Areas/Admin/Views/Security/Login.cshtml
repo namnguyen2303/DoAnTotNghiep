@@ -19,11 +19,10 @@
     @Scripts.Render("~/bundle/js")
 </head>
 <body class="bg-login" style="overflow:hidden;">
-    <div class="row justify-content-center">
-        <div class="col-md-4 mt-5 p-5" style="border: 1px solid #fd693c;">
-            @using (Html.BeginForm())
-            {
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @*<div class="row justify-content-center">
+            <div class="col-md-4 mt-5 p-5" style="border: 1px solid #fd693c;">
+                @using (Html.BeginForm())
+                {
                 <div class="container">
                     <div class="row justify-content-center">
                         <div class="col-md-10">
@@ -31,38 +30,48 @@
                         </div>
                     </div>
                     <div class="txtLogin row mt-5" id="txtLogin" style="position:relative;">
-                        <input type="text" class="form-control col-md-10 pl-4 inputLogin" placeholder="Tài khoản" id="txtUsernameLogin" name="username">
+                        <label for="">Tên đăng nhập<span>*</span></label>
+                        <input type="text" class="form-control col-md-10 pl-4 inputLogin" placeholder="Tài khoản" required name="username">
                         <i style="position:absolute; top:10px; left:40px;" class="iconUsernameLogin fa fa-user"></i>
                     </div>
                     <div class="txtLogin row mt-1" id="txtLogin" style="position:relative;">
-                        <input type="password" class="form-control col-md-10 pl-4 inputLogin" placeholder="Mật khẩu" id="txtPasswordLogin" name="pass">
+                        <input type="password" class="form-control col-md-10 pl-4 inputLogin" placeholder="Mật khẩu" required name="pass">
                         <i style="position:absolute; top:10px; left:40px;" class="iconPasswordLogin fa fa-lock"></i>
                     </div>
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                     <div class="row justify-content-center">
                         <button class="btn btn-primary mt-3" id="btnLogin" type="submit">Đăng nhập</button>
                     </div>
                 </div>
-            }
-        </div>
-    </div>
-    @*<div class="login-dark">
-            <form method="post">
-                <h2 class="sr-only">Login Form</h2>
-                <div class="illustration">
-                    <i class="icon ion-ios-locked-outline"></i>
-                </div>
-                <div class="form-group">
-                    <input class="form-control" id="txtUserLogin" type="text" name="email" placeholder="Tên đăng nhập">
-                </div>
-                <div class="form-group">
-                    <input class="form-control" id="txtPassLogin" type="password" name="password" placeholder="Mật khẩu">
-                </div>
-                <div class="form-group">
-                    <button class="btn btn-primary btn-block" onclick="Login();">Đăng nhập</button>
-                </div>
-                <a href="#" class="forgot">Forgot your email or password?</a>
-            </form>
+                }
+            </div>
         </div>*@
-    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>*@
+    <div class="login-dark">
+        @using (Html.BeginForm())
+        {
+            <h2 class="sr-only">Login Form</h2>
+            <div class="illustration">
+                <i class="icon ion-ios-locked-outline"></i>
+            </div>
+            <div class="form-group">
+                <input type="text" class="form-control inputLogin" placeholder="Tài khoản" required name="username">
+            </div>
+            <div class="form-group">
+                <input type="password" class="form-control inputLogin" placeholder="Mật khẩu" required name="pass">
+            </div>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger validation" })
+            <div class="form-group">
+                <button class="btn btn-primary btn-block" id="btnLogin" type="submit">Đăng nhập</button>
+            </div>
+
+            @*<a href="#" class="forgot">Forgot your email or password?</a>*@
+        }
+    </div>
+    @section Scripts{
+        <script type="text/javascript">
+            setTimeout(function () { $('.validation').fadeOut(); }, 2000);
+        </script>
+    }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

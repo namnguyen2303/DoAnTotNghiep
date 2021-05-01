@@ -12,7 +12,7 @@ namespace Data.DB
         [Column(Order = 0)]
         public int id { get; set; }
 
-        public int? code { get; set; }
+        public string code { get; set; }
 
         [StringLength(100)]
         public string color_name { get; set; }

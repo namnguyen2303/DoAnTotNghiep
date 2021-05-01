@@ -37,6 +37,7 @@ namespace APIProject.Controllers
             ViewData["Categories0"] = categoryBusiness.getCategories0();
             ViewBag.Categories1 = categoryBusiness.getCategories1();
             ViewBag.Categories2 = categoryBusiness.getCategories2();
+            ViewBag.NameUserCurrent = System.Web.HttpContext.Current.User.Identity.Name;
         }
 
 

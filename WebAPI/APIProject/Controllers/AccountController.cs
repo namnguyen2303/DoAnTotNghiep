@@ -80,7 +80,7 @@ namespace APIProject.Controllers
                 var res = _db.customers.Where(x => x.status == SystemParam.ACTIVE).FirstOrDefault(x => x.email.ToUpper() == model.email);
                 if (res == null)
                 {
-                    ModelState.AddModelError("", @"Sai tài khoản");
+                    ModelState.AddModelError("", @"Tài khoản này không tồn tại");
                     return View(model);
                 }
                 if (!HtmlHelpers.VerifyHash(model.pass, "SHA256", res.pass))

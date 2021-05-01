@@ -1,6 +1,6 @@
 ﻿@using Data.DB;
 @using Data.Model;
-
+@using System.Globalization;
 @model List<ListSlideOutputModel>
 
 
@@ -9,7 +9,7 @@
 
     var listSlide = ViewBag.listSlide as IEnumerable<ListSlideOutputModel>;
     var spHots = ViewBag.SpHot as IEnumerable<ListProductOutputModel>;
-    var spnam = @ViewBag.SpNamHot as ListProductOutputModel;
+    var spnam = ViewBag.SpNamHot as ListProductOutputModel;
 }
 
 @{
@@ -21,8 +21,8 @@
     var productNews = ViewBag.listProNew as IEnumerable<ListProductOutputModel>;
     var productSales = ViewBag.listProSale as IEnumerable<ListProductOutputModel>;
     var topNews = ViewBag.listTopNews as IEnumerable<ListNewsWebOutputModel>;
+    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
 }
-
 
 <script src="~/Scripts/js/jquery.min.js"></script>
 
@@ -88,7 +88,7 @@
                                             }
                                             else
                                             {
-                                                <a href="jvascrpt:;">
+                                                <a href="javascript:void(0);">
                                                     For Men
                                                 </a>
                                             }
@@ -112,8 +112,8 @@
                                                     <img src="@item.ImgUrl" alt="img">
 
                                                     <div class="aa-prom-content">
-                                                        <span>Sản Phẩm Hot</span>
-                                                        <h4><a href="/ProductDetail/Index?ID=@item.ID&Category_ID=@item.Category_ID">@item.Description</a></h4>
+                                                        <span>Sản phẩm nổi bật</span>
+                                                        <h4><a href="/ProductDetail/Index?ID=@item.ID&Category_ID=@item.Category_ID"></a></h4>
                                                     </div>
                                                 </div>
                                             </div>
@@ -160,7 +160,14 @@
                                                         <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                         <figcaption>
                                                             <h4 class="aa-product-title"><a href="#">@i.Name</a></h4>
-                                                            <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                            @if (i.PriceSale != null)
+                                                            {
+                                                                <span class="aa-product-price">@((i.PriceSale != null ? i.PriceSale : 0).ToString("#,###", cul.NumberFormat))₫</span><span class="aa-product-price"><del>@i.Price.ToString("#,###", cul.NumberFormat)₫ </del></span>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="aa-product-price">@((i.Price != null ? i.Price : 0).ToString("#,###", cul.NumberFormat))₫</span><span class="aa-product-price"></span>
+                                                            }
                                                         </figcaption>
                                                     </figure>
                                                     <div class="aa-product-hvr-content">
@@ -169,7 +176,10 @@
                                                         <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                                     </div>
                                                     <!-- product badge -->
-                                                    @*<span class="aa-badge aa-sale" href="#">SALE!</span>*@
+                                                    @if (i.PriceSale != null)
+                                                    {
+                                                        <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                    }
                                                 </li>
                                             }
                                         }
@@ -190,7 +200,15 @@
                                                         <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                         <figcaption>
                                                             <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                            @if (i.PriceSale != null)
+                                                            {
+                                                                <span class="aa-product-price"> @String.Format("{0:n0}", i.PriceSale)₫</span><span class="aa-product-price"><del>@i.Price</del>₫</span>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)₫</span><span class="aa-product-price"></span>
+                                                            }
                                                         </figcaption>
                                                     </figure>
                                                     <div class="aa-product-hvr-content">
@@ -199,7 +217,10 @@
                                                         <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                                     </div>
                                                     <!-- product badge -->
-                                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                    @if (i.PriceSale != null)
+                                                    {
+                                                        <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                    }
                                                 </li>
                                             }
                                         }
@@ -220,7 +241,15 @@
                                                         <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                         <figcaption>
                                                             <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                            <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                            @if (i.PriceSale != null)
+                                                            {
+                                                                <span class="aa-product-price"> @String.Format("{0:n0}", i.PriceSale)₫</span><span class="aa-product-price"><del>@i.Price</del>₫</span>
+
+                                                            }
+                                                            else
+                                                            {
+                                                                <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)₫</span><span class="aa-product-price"></span>
+                                                            }
                                                         </figcaption>
                                                     </figure>
                                                     <div class="aa-product-hvr-content">
@@ -229,7 +258,10 @@
                                                         <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                                     </div>
                                                     <!-- product badge -->
-                                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                    @if (i.PriceSale != null)
+                                                    {
+                                                        <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                    }
                                                 </li>
                                             }
                                         }
@@ -375,8 +407,17 @@
                                                     <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
                                                     <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                     <figcaption>
-                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                        <h4 class="aa-product-title"><a href="#">@i.Name</a></h4>
+                                                        @if (i.PriceSale != null)
+                                                        {
+                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.PriceSale)₫</span><span class="aa-product-price"><del>@i.Price</del>₫</span>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)₫</span><span class="aa-product-price"></span>
+                                                        }
+
                                                     </figcaption>
                                                 </figure>
                                                 <div class="aa-product-hvr-content">
@@ -384,6 +425,10 @@
                                                     <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                                                     <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                                 </div>
+                                                @if (i.PriceSale != null)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                }
                                             </li>
                                         }
                                     }
@@ -403,8 +448,18 @@
                                                     <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
                                                     <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                     <figcaption>
-                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                        <h4 class="aa-product-title"><a href="#">@i.Name</a></h4>
+                                                        @if (i.PriceSale != null)
+                                                        {
+                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.PriceSale)₫</span><span class="aa-product-price"><del>@i.Price</del>₫</span>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)₫</span><span class="aa-product-price"></span>
+                                                        }
+
+
                                                     </figcaption>
                                                 </figure>
                                                 <div class="aa-product-hvr-content">
@@ -412,6 +467,10 @@
                                                     <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                                                     <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                                 </div>
+                                                @if (i.PriceSale != null)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                }
                                             </li>
                                         }
                                     }
@@ -431,8 +490,16 @@
                                                     <a class="aa-product-img" href="/ProductDetail/Index?ID=@i.ID&Category_ID=@i.Category_ID"><img src="@i.ImgUrl" alt="polo shirt img"></a>
                                                     <a class="aa-add-card-btn" href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })"><span class="fa fa-shopping-cart"></span>Add To Cart</a>
                                                     <figcaption>
-                                                        <h4 class="aa-product-title"><a href="#">@i.Category_Name</a></h4>
-                                                        <span class="aa-product-price">@i.Price</span><span class="aa-product-price">@*<del>@i.Price</del>*@</span>
+                                                        <h4 class="aa-product-title"><a href="#">@i.Name</a></h4>
+                                                        @if (i.PriceSale != null)
+                                                        {
+                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.PriceSale)₫</span><span class="aa-product-price"><del>@i.Price</del>₫</span>
+
+                                                        }
+                                                        else
+                                                        {
+                                                            <span class="aa-product-price"> @String.Format("{0:n0}", i.Price)₫</span><span class="aa-product-price"></span>
+                                                        }
                                                     </figcaption>
                                                 </figure>
                                                 <div class="aa-product-hvr-content">
@@ -440,6 +507,10 @@
                                                     <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle="tooltip" data-placement="top" title="Compare"><span class="fa fa-exchange"></span></a>
                                                     <a href="@Url.Action("Index", "ProductDetail", new { ID = i.ID })" data-toggle2="tooltip" data-placement="top" title="Quick View" data-toggle="modal" data-target="#quick-view-modal"><span class="fa fa-search"></span></a>
                                                 </div>
+                                                @if (i.PriceSale != null)
+                                                {
+                                                    <span class="aa-badge aa-sale" href="#">SALE!</span>
+                                                }
                                             </li>
                                         }
                                     }

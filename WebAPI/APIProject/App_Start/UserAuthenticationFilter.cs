@@ -23,7 +23,7 @@ namespace APIProject.App_Start
             //{
             //    //Chuyen ve trang dang nhap
             //    var routeValues = new RouteValueDictionary();
-            //    routeValues["controller"] = "Home";
+            //    routeValues["controller"] = "Security";
             //    routeValues["action"] = "Login";
             //    filterContext.Result = new RedirectToRouteResult(routeValues);
             //}

@@ -78,14 +78,16 @@ namespace Data.Business
             }
         }
 
-        public int CreateProduct(int CategoryID, /*string Code,*/ string Name, string Price, string ImageUrl, string Note, string Description, int New, int Sale, int Hot)
+        public int CreateProduct(int CategoryID, string Code, string Name, string Price,string PriceSale, string ImageUrl, string Note, string Description, int New, int Sale, int Hot)
         {
             try
             {
                 product item = new product();
                 item.product_category_id = CategoryID;
+                item.code = Code;
                 item.product_name = Name;
                 item.price_start = Convert.ToInt32((Price).ToString().Replace(",", ""));
+                item.price_sale = Convert.ToInt32((PriceSale).ToString().Replace(",", ""));
                 item.image_url = ImageUrl;
                 item.created_at = DateTime.Now;
                 item.description = Description;
@@ -128,9 +130,11 @@ namespace Data.Business
                 var obj = cnn.products.Find(ID);
                 ListProductOutputModel Item = new ListProductOutputModel();
                 Item.ID = obj.id;
+                Item.Code = obj.code;
                 Item.Name = obj.product_name;
                 Item.Category_ID = obj.product_category_id;
                 Item.Price = obj.price_start;
+                Item.PriceSale = obj.price_sale;
                 Item.ImgUrl = obj.image_url;
                 Item.Description = obj.description;
                 Item.Content = obj.detail;
@@ -146,14 +150,16 @@ namespace Data.Business
             }
         }
 
-        public int SaveEditItem(int ID, /*string Code,*/ string Name, int CategoryID, string ImageUrl, string Note, string Price, string Description, int New, int Sale, int Hot)
+        public int SaveEditItem(int ID, string Code, string Name, int CategoryID, string ImageUrl, string Note, string Price, string PriceSale, string Description, int New, int Sale, int Hot)
         {
             try
             {
                 product item = cnn.products.Find(ID);
                 item.product_name = Name;
+                item.code = Code;
                 item.product_category_id = CategoryID;
                 item.price_start = Convert.ToInt32((Price).ToString().Replace(",", ""));
+                item.price_sale = Convert.ToInt32((PriceSale).ToString().Replace(",", ""));
                 item.image_url = ImageUrl;
                 item.description = Description;
                 item.detail = Note;
@@ -175,7 +181,7 @@ namespace Data.Business
             try
             {
                 List<ListProductOutputModel> listProMen = cnn.products.Where(u => u.is_active.Equals(SystemParam.ACTIVE)
-                                                          && (u.product_categories.category_id == 1))
+                                                          && (u.product_category_id == 4))
                 .Select(u => new ListProductOutputModel
                 {
                     ID = u.id,
@@ -184,6 +190,7 @@ namespace Data.Business
                     Description = u.description,
                     Category_ID = u.product_category_id,
                     Price = u.price_start,
+                    PriceSale = u.price_sale,
                     Name = u.product_name,
                     Is_Hot = u.is_hot,
                     Category_Name = u.product_categories.name_product_category
@@ -201,7 +208,7 @@ namespace Data.Business
             try
             {
                 List<ListProductOutputModel> listProWMen = cnn.products.Where(u => u.is_active.Equals(SystemParam.ACTIVE)
-                && (u.product_categories.category_id == 0))
+                && (u.product_category_id == 3))
                 .Select(u => new ListProductOutputModel
                 {
                     ID = u.id,
@@ -209,11 +216,12 @@ namespace Data.Business
                     Content = u.detail,
                     Description = u.description,
                     Price = u.price_start,
+                    PriceSale = u.price_sale,
                     Name = u.product_name,
                     Category_ID = u.product_category_id,
                     Is_Hot = u.is_hot,
                     Category_Name = u.product_categories.name_product_category
-                }).Take(8).ToList(); ;
+                }).Take(8).ToList(); 
                 return listProWMen;
             }
             catch
@@ -227,7 +235,7 @@ namespace Data.Business
             {
                 List<ListProductOutputModel> listProKid = (from u in cnn.products
                                                            where u.is_active.Equals(SystemParam.ACTIVE)
-                                                           && (u.product_categories.category_id == 2)
+                                                           && (u.product_category_id == 5)
                                                            select new ListProductOutputModel
                                                            {
                                                                ID = u.id,
@@ -236,6 +244,7 @@ namespace Data.Business
                                                                Description = u.description,
                                                                Category_ID = u.product_category_id,
                                                                Price = u.price_start,
+                                                               PriceSale = u.price_sale,
                                                                Name = u.product_name,
                                                                Is_Hot = u.is_hot,
                                                                Category_Name = u.product_categories.name_product_category
@@ -264,6 +273,7 @@ namespace Data.Business
                                                          Category_ID = p.product_category_id,
                                                          Category_Name = p.product_categories.name_product_category,
                                                          Price = p.price_start,
+                                                         PriceSale = p.price_sale,
                                                          CreateDate = p.created_at
                                                      }).ToList();
 
@@ -290,6 +300,7 @@ namespace Data.Business
                                                          Category_ID = p.product_category_id,
                                                          Category_Name = p.product_categories.name_product_category,
                                                          Price = p.price_start,
+                                                         PriceSale = p.price_sale,
                                                          CreateDate = p.created_at
                                                      }).ToList();
 
@@ -300,7 +311,32 @@ namespace Data.Business
                 return new List<ListProductOutputModel>();
             }
         }
+        public int GetListPro()
+        {
+            try
+            {
+                List<ListProductOutputModel> list = (from p in cnn.products
+                                                     where p.is_active.Equals(SystemParam.ACTIVE) 
+                                                     orderby p.id descending
+                                                     select new ListProductOutputModel
+                                                     {
+                                                         ID = p.id,
+                                                         Name = p.product_name,
+                                                         ImgUrl = p.image_url,
+                                                         Category_ID = p.product_category_id,
+                                                         Category_Name = p.product_categories.name_product_category,
+                                                         Price = p.price_start,
+                                                         PriceSale = p.price_sale,
+                                                         CreateDate = p.created_at
+                                                     }).ToList();
 
+                return list.Count();
+            }
+            catch
+            {
+                return 0;
+            }
+        }
         public List<ListProductOutputModel> GetListProHot()
         {
             try
@@ -316,6 +352,7 @@ namespace Data.Business
                                                          Category_ID = p.product_category_id,
                                                          Category_Name = p.product_categories.name_product_category,
                                                          Price = p.price_start,
+                                                         PriceSale = p.price_sale,
                                                          CreateDate = p.created_at
                                                      }).ToList();
 
@@ -342,6 +379,8 @@ namespace Data.Business
                                                          Category_ID = p.product_category_id,
                                                          Category_Name = p.product_categories.name_product_category,
                                                          Price = p.price_start,
+                                                         PriceSale = p.price_sale,
+
                                                          CreateDate = p.created_at
                                                      }).Take(4).ToList();
 
@@ -360,7 +399,7 @@ namespace Data.Business
                 ListProductOutputModel SpNamHot = (from u in cnn.products
                                                    where u.is_active.Equals(SystemParam.ACTIVE)
                                                    && u.is_hot == 1
-                                                   && u.product_category_id == 1
+                                                   && u.product_category_id == 4
                                                    orderby u.created_at descending
                                                    select new ListProductOutputModel
                                                    {
@@ -371,6 +410,8 @@ namespace Data.Business
                                                        Category_ID = u.product_category_id,
                                                        Category_Name = u.product_categories.name_product_category,
                                                        Price = u.price_start,
+                                                       PriceSale = u.price_sale,
+
                                                        CreateDate = u.created_at
                                                    }).FirstOrDefault();
                 return SpNamHot;
@@ -395,6 +436,7 @@ namespace Data.Business
                 p.Content = prodetail.detail;
                 p.Description = prodetail.description;
                 p.Price = prodetail.price_start;
+                p.PriceSale = prodetail.price_sale;
                 p.ImgUrl = prodetail.image_url;
                 return p;
             }
@@ -422,6 +464,8 @@ namespace Data.Business
                                                          Category_ID = p.product_category_id,
                                                          Category_Name = p.product_categories.name_product_category,
                                                          Price = p.price_start,
+                                                         PriceSale = p.price_sale,
+
                                                          CreateDate = p.created_at
                                                      }).ToList();
 
@@ -449,6 +493,8 @@ namespace Data.Business
                                                          Category_ID = p.product_category_id,
                                                          Category_Name = p.product_categories.name_product_category,
                                                          Price = p.price_start,
+                                                         PriceSale = p.price_sale,
+
                                                          CreateDate = p.created_at
                                                      }).ToList();
                 if (show == -1)
@@ -487,6 +533,8 @@ namespace Data.Business
         //                                                 Category_ID = p.category_product_id,
         //                                                 Category_Name = p.product_category.name,
         //                                                 Price = p.price,
+        //                                                  PriceSale = p.price_sale,
+
         //                                                 CreateDate = p.created_at
         //                                             }).ToList();
         //        return list;

@@ -327,13 +327,13 @@
     color: #f68c1f
 }
 
-.theme-orange:before, .theme-orange:after {
+/*.theme-orange:before, .theme-orange:after {
     background: #f68c1f
-}
+}*/
 
-.theme-orange #wrapper:before, .theme-orange #wrapper:after {
+/*.theme-orange #wrapper:before, .theme-orange #wrapper:after {
     background: #f68c1f
-}
+}*/
 
 .theme-orange .sidebar-nav .metismenu > li.active > a {
     border-left-color: #f68c1f;

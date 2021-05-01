@@ -2,7 +2,10 @@
 @using Data.DB
 @using Data.Model.APIWeb
 @using Data.Utils
-
+@using System.Globalization;
+@{
+    CultureInfo cul = CultureInfo.GetCultureInfo("vi-VN");
+}
 <div class="col-md-12">
     <div class="breadcrumb-holder">
         <div class="row mb-3">
@@ -13,11 +16,11 @@
     </div>
 </div>
 <form id="form_create_item" name="form_create_item">
-    <div class="row col-12">
+    <div class="row">
         <!--Left content-->
         <div class="col-md-6">
-            <div class="row col-12">
-                <div class="col-md-5"><p class="mb-0 color-require"><label class="text-dark">Danh mục</label> *</p></div>
+            <div class="row">
+                <div class="col-md-4"><p class="mb-0 color-require"><label class="text-dark">Danh mục</label> <span style="color:red;">*</span></p></div>
                 <div class="col-md-7">
                     <select class="form-control" id="cbbCategory" name="CategoryID">
                         @{
@@ -29,25 +32,25 @@
                     </select>
                 </div>
             </div>
-            @*<div class="row col-12 mt-3">
-                    <div class="col-md-5">
-                        <p class="mb-0 color-require"><label class="text-dark">Mã sản phẩm</label> *</p>
+            <div class="row mt-3">
+                    <div class="col-md-4">
+                        <p class="mb-0 color-require"><label class="text-dark">Mã sản phẩm</label> <span style="color:red;">*</span></p>
                     </div>
                     <div class="col-md-7">
                         <input type="text" class="form-control" id="codeCreateProduct" name="codeCreateProduct" placeholder="Nhập mã sản phẩm">
                     </div>
-                </div>*@
-            <div class="row col-12 mt-3">
-                <div class="col-md-5">
-                    <p class="mb-0 color-require"><label class="text-dark">Tên sản phẩm</label> *</p>
+                </div>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <p class="mb-0 color-require"><label class="text-dark">Tên sản phẩm</label> <span style="color:red;">*</span></p>
                 </div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" id="nameCreateProduct" name="nameCreateProduct" placeholder="Nhập tên sản phẩm">
                 </div>
             </div>
-            <div class="row col-12 mt-3">
-                <div class="col-md-5">
-                    <p class="mb-0 color-require"><label class="text-dark">Mô tả</label> *</p>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <p class="mb-0 color-require"><label class="text-dark">Mô tả</label> </p>
                 </div>
                 <div class="col-md-7">
                     <textarea class="form-control" id="descriptionCreateProduct" rows="3"></textarea>
@@ -57,28 +60,36 @@
         <!--End left content-->
         <!--Right conntent-->
         <div class="col-md-6">
-            <div class="row col-12">
+            <div class="row">
                 <div class="col-md-4">
                     <input type="checkbox" name="new_product" id="new_product" /> <small>Sản phẩm mới</small>
                 </div>
                 <div class="col-md-4">
-                    <input type="checkbox" name="best_sale_product" id="best_sale_product" /> <small>Sản phẩm bán chạy</small>
+                    <input type="checkbox" name="hot_product" id="hot_product" /> <small>Sản phẩm hot</small>
                 </div>
-                <div class="col-md-4">
-                    <input type="checkbox" name="hot_product" id="hot_product" /> <small>Hot trong tháng</small>
-                </div>
+                @*<div class="col-md-4">
+                    <input type="checkbox" name="sale_product" id="sale_product" /> <small>Sản phẩm giảm giá</small>
+                </div>*@
             </div>
-            <div class="row col-12 mt-3">
-                <div class="col-md-5">
-                    <p class="mb-0 color-require"><label class="text-dark">Giá tiền</label> *</p>
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <p class="mb-0 color-require"><label class="text-dark">Giá tiền</label> <span style="color:red;">*</span></p>
                 </div>
                 <div class="col-md-7">
-                    <input type="number" class="form-control number" id="priceCreateProduct" name="priceCreateProduct" placeholder="Nhập giá tiền">
+                    <input type="text" class="form-control number priceCreateProduct" id="priceCreateProduct" name="priceCreateProduct" placeholder="Nhập giá tiền">
                 </div>
             </div>
-            <div class="row col-12">
+            <div class="row mt-3">
+                <div class="col-md-4">
+                    <p class="mb-0 color-require"><label class="text-dark">Giá tiền khuyến mãi</label></p>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control number priceSale" id="priceSale" name="priceSale" placeholder="Nhập giá tiền">
+                </div>
+            </div>
+            <div class="row">
                 <div class="col-md-12 mt-3">
-                    <p class="mb-0 color-require"><label class="text-dark">Ảnh sản phẩm</label> *</p>
+                    <p class="mb-0 color-require"><label class="text-dark">Ảnh sản phẩm</label> <span style="color:red;">*</span></p>
                 </div>
             </div>
             <div class="col-md-12 text-center">
@@ -100,7 +111,7 @@
     <div class="row col-12 mt-5">
         <div class="col-md-12">
             <div class="row col-12 ml-1">
-                <p class="mb-0 color-require"><label class="text-dark">Nội dung</label> *</p>
+                <p class="mb-0 color-require"><label class="text-dark">Nội dung</label><span style="color:red;">*</span></p>
             </div>
             <div class="col-md-12 col-sm-12 col-12 mt-3">
                 <textarea name="Note" class="form-control mb-3" id="noteCreateProduct"></textarea>
@@ -117,6 +128,24 @@
 </div>
 
 <script type="text/javascript">
+
+    $('input.priceCreateProduct').on('blur', function () {
+        const value = this.value.replace(/,/g, '');
+        this.value = parseFloat(value).toLocaleString('en-US', {
+            style: 'decimal',
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+        });
+    });
+    $('input.priceSale').on('blur', function () {
+        const value = this.value.replace(/,/g, '');
+        this.value = parseFloat(value).toLocaleString('en-US', {
+            style: 'decimal',
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+        });
+    });
+
     var count = 0;
     $("#addImg").off('click').on('click', function (e) {
         e.preventDefault();
@@ -144,6 +173,7 @@
     });
 
     $(document).ready(function () {
+
         CKEDITOR.replace('noteCreateProduct', {
             height: 300,
             disableObjectResizing: true

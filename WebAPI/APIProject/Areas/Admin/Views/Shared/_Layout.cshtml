@@ -28,12 +28,12 @@
                     <div class="user-account float-right">
                         <div class="dropdown">
                             <a href="javascript:void(0);" class="dropdown-toggle user-name" data-toggle="dropdown">
-                                <strong class="" id="userNameLogin" style=" color: rgb(231,211,90);"></strong>
+                                @ViewBag.NameUserCurrent<strong class="" id="userNameLogin" style=" color: rgb(231,211,90);"></strong>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-right account">
                                 <li data-toggle="modal" data-target="#changePassword" onclick="Reload();"><a href="#"><i class="fa fa-user-o"></i>Đổi mật khẩu</a></li>
                                 <li class="divider"></li>
-                                <li><a href="" onclick="logout();"><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
+                                <li><a href="/Admin/Security/Login" @*onclick="logout();"*@><i class="fa fa-sign-out"></i>Đăng xuất</a></li>
                             </ul>
                         </div>
                     </div>

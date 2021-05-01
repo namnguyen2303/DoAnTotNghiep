@@ -18,7 +18,7 @@
         <!--Left content-->
         <div class="col-md-6">
             <div class="row col-12">
-                <div class="col-md-5"><p class="mb-0 color-require"><label class="text-dark">Danh mục</label> *</p></div>
+                <div class="col-md-5"><p class="mb-0 color-require"><label class="text-dark">Danh mục</label> <span style="color:red;">*</span></p></div>
                 <div class="col-md-7">
                     <select class="form-control" value="@Model.Category_ID" id="cbbCategory_edit" name="cbbCategory_edit">
                         @{
@@ -32,7 +32,7 @@
             </div>
             <div class="row col-12 mt-3">
                 <div class="col-md-5">
-                    <p class="mb-0 color-require"><label class="text-dark">Mã sản phẩm</label> *</p>
+                    <p class="mb-0 color-require"><label class="text-dark">Mã sản phẩm</label> <span style="color:red;">*</span></p>
                 </div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" value="@Model.Code" id="CodeCreate_edit" name="CodeCreate_edit" placeholder="Nhập mã sản phẩm">
@@ -41,7 +41,7 @@
             </div>
             <div class="row col-12 mt-3">
                 <div class="col-md-5">
-                    <p class="mb-0 color-require"><label class="text-dark">Tên sản phẩm</label> *</p>
+                    <p class="mb-0 color-require"><label class="text-dark">Tên sản phẩm</label> <span style="color:red;">*</span></p>
                 </div>
                 <div class="col-md-7">
                     <input type="text" class="form-control" value="@Model.Name" id="NameCreate_edit" name="NameCreate_edit" placeholder="Nhập tên sản phẩm">
@@ -49,7 +49,7 @@
             </div>
             <div class="row col-12 mt-3">
                 <div class="col-md-5">
-                    <p class="mb-0 color-require"><label class="text-dark">Mô tả</label> *</p>
+                    <p class="mb-0 color-require"><label class="text-dark">Mô tả</label> <span style="color:red;">*</span></p>
                 </div>
                 <div class="col-md-7">
                     <textarea class="form-control" id="descriptionEditProduct" rows="3">@Model.Description</textarea>
@@ -64,23 +64,31 @@
                     <input type="checkbox" name="new_product_edit" @(Model.Is_New == 1 ? Html.Raw("checked") : Html.Raw("")) id="new_product_edit" /> <small>Sản phẩm mới</small>
                 </div>
                 <div class="col-md-4">
-                    <input type="checkbox" name="best_sale_product_edit" @(Model.Is_Sale == 1 ? Html.Raw("checked") : Html.Raw("")) id="best_sale_product_edit" /> <small>Sản phẩm bán chạy</small>
+                    <input type="checkbox" name="hot_product_edit" @(Model.Is_Hot == 1 ? Html.Raw("checked") : Html.Raw("")) id="hot_product_edit" /> <small>Sản phẩm hot</small>
                 </div>
-                <div class="col-md-4">
-                    <input type="checkbox" name="hot_product_edit" @(Model.Is_Hot == 1 ? Html.Raw("checked") : Html.Raw("")) id="hot_product_edit" /> <small>Hot trong tháng</small>
+                @*<div class="col-md-4">
+                    <input type="checkbox" name="best_sale_product_edit" @(Model.Is_Sale == 1 ? Html.Raw("checked") : Html.Raw("")) id="best_sale_product_edit" /> <small>Sản phẩm giảm giá</small>
+                </div>*@
+            </div>
+            <div class="row col-12 mt-3">
+                <div class="col-md-5">
+                    <p class="mb-0 color-require"><label class="text-dark">Giá tiền</label> <span style="color:red;">*</span></p>
+                </div>
+                <div class="col-md-7">
+                    <input type="text" class="form-control number" value="@Model.Price" id="PriceCreate_edit" name="PriceCreate_edit" placeholder="Nhập giá tiền">
                 </div>
             </div>
             <div class="row col-12 mt-3">
                 <div class="col-md-5">
-                    <p class="mb-0 color-require"><label class="text-dark">Giá tiền</label> *</p>
+                    <p class="mb-0 color-require"><label class="text-dark">Giá tiền khuyến mãi</label></p>
                 </div>
                 <div class="col-md-7">
-                    <input type="number" class="form-control number" value="@Model.Price" id="PriceCreate_edit" name="PriceCreate_edit" placeholder="Nhập giá tiền">
+                    <input type="text" class="form-control number priceSaleEdit" value="@Model.PriceSale" id="priceSaleEdit" name="priceSaleEdit" placeholder="Nhập giá tiền">
                 </div>
             </div>
             <div class="row col-12">
                 <div class="col-md-12">
-                    <p class="mb-0 color-require"><label class="text-dark">Ảnh sản phẩm</label> *</p>
+                    <p class="mb-0 color-require"><label class="text-dark">Ảnh sản phẩm</label> <span style="color:red;">*</span></p>
                 </div>
             </div>
             <div class="row col-12 text-center">
@@ -138,6 +146,23 @@
 </div>
 
 <script type="text/javascript">
+
+    $('input.PriceCreate_edit').on('blur', function () {
+        const value = this.value.replace(/,/g, '');
+        this.value = parseFloat(value).toLocaleString('en-US', {
+            style: 'decimal',
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+        });
+    });
+    $('input.priceSaleEdit').on('blur', function () {
+        const value = this.value.replace(/,/g, '');
+        this.value = parseFloat(value).toLocaleString('en-US', {
+            style: 'decimal',
+            maximumFractionDigits: 0,
+            minimumFractionDigits: 0
+        });
+    });
     //edit image
     var count = 0;
     $("#_addImg").off('click').on('click', function (e) {
